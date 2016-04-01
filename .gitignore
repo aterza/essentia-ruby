@@ -12,3 +12,7 @@
 *.o
 *.a
 mkmf.log
+/ext/Makefile
+/ext/essentia_wrap.c
+.DS_Store
+*~
