@@ -1,0 +1,3 @@
+[submodule "ext/essentia"]
+	path = ext/essentia
+	url = https://github.com/MTG/essentia
