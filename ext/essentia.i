@@ -1,7 +1,7 @@
 //
 // SWIG Wrapper for essentia
 //
-%module EssentiaRuby
+%module essentia_ruby
 %{
   #include "essentia.h"
 %}

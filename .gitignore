@@ -14,5 +14,7 @@
 mkmf.log
 /ext/Makefile
 /ext/essentia_wrap.c
+/ext/essentia_wrap.cxx
+/ext/essentia/src/essentia/config.h
 .DS_Store
 *~
