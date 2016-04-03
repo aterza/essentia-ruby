@@ -1,8 +1,25 @@
-# How to create and compile the SWIG wrapper
+# How to bind the Essentia library with ruby
+
+## How to compile the Essentia library in the first place
+
+* Follow the instructions [here](http://essentia.upf.edu/documentation/installing.html) as far
+  as pre-requisites etc. are concerning
+* A good configuration recepie is:
+  ```sh
+  ./waf configure --mode=release --build-static --with-python --with-vamp
+  ```
+  (the configuration provided is long-winded and complicated and not needed
+  for our purposes)
+* then compile and link as per instructions
+  ```sh
+  ./waf
+  ```
+
+## How to compile the SWIG wrapper
 
 * Create the `c++` wrapper with the following command:
 ```sh
-$ swig -I. -I./essentia/src/essentia -I./essentia/src/algorithms/tonal/ -c++ -ruby types.i
+$ swig -I. -I./essentia/src/essentia -I./essentia/src/algorithms/tonal/ -c++ -ruby essentia.i
 ```
 * Create the `Makefile` with the following command:
 ```sh
