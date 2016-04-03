@@ -7,12 +7,12 @@ Gem::Specification.new do |spec|
   spec.name          = "essentia_ruby"
   spec.version       = EssentiaRuby::VERSION
   spec.authors       = ["Nicola Bernardini"]
-  spec.email         = ["nicb@sme-ccppd.org"]
+  spec.email         = ['n.bernardini@conservatoriosantacecilia.it']
   spec.extensions    = ["ext/essentia_ruby/extconf.rb"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
-  spec.license       = "MIT"
+  spec.summary       = %q{A ruby wrap for the Essentia libray}
+  spec.description   = %q{A SWIG-based ruby wrap of the Essentia MIR library by the MTG (https://github.com/MTG/essentia)}
+  spec.homepage      = "https://github.com/nicb/essentia-ruby"
+  spec.license       = "GNU GPL 3.0"
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }

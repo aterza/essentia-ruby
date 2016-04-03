@@ -1,11 +1,22 @@
 require "mkmf"
 
+# abort 'missing dissonance' unless have_library 'essentia', 'dissonance'
 
-version_dir = File.expand_path(File.join('..', 'essentia', 'src'), __FILE__)
-essentia_dir = File.join(version_dir, 'essentia')
+essentia_path = File.expand_path(File.join('..', 'essentia'), __FILE__)
+src_dir = File.join(essentia_path, 'src')
+essentia_dir = File.join(src_dir, 'essentia')
+lib_dir = File.join(essentia_path, 'build', 'src')
+algorithms_dir = File.join(src_dir, 'algorithms')
+streaming_dir = File.join(essentia_dir, 'streaming')
+tonal_dir = File.join(algorithms_dir, 'tonal')
 
-$defs.unshift("-iquote #{version_dir}")
+$defs.unshift("-I#{streaming_dir}")
 $defs.unshift("-I#{essentia_dir}")
+$defs.unshift("-iquote #{src_dir}")
+$defs.unshift("-I#{tonal_dir}")
 $defs.push('-I/usr/include/tcl')
+$LDFLAGS += " -L#{lib_dir}"
+$libs = append_library($libs, 'essentia')
+$libs = append_library($libs, 'supc++')
 
-create_makefile("./essentia_ruby")
+create_makefile("essentia_ruby")
