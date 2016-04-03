@@ -13,7 +13,9 @@ $ ruby extconf.rb
 $ make
 ```
 * Rapid test if the wrapper is doing the proper work:
-```sh
-$ ruby -I. -e "require 'essentia_ruby'; puts defined?(Essentia_ruby::<type>).to_s"
-```
-(substitute `<type>` with whatever class you are trying to wrap)
+  ```sh
+  $ ruby -I. -e "require 'essentia_ruby'; puts defined?(Essentia_ruby::<type>).to_s"
+  ```
+  (substitute `<type>` with whatever class you are trying to wrap). This
+  should return `"constant"` or `"method"` if it works, and a blank line if it
+  doesn't.
