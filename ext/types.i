@@ -10,4 +10,4 @@
 %include std_vector.i
 
 %include "config.h"
-// %include "types.h"
+%include "types.h"

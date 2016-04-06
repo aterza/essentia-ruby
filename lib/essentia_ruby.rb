@@ -1,6 +1,8 @@
 require "essentia_ruby/version"
-require "essentia_ruby/essentia_ruby"
+require File.expand_path(File.join(['..'] * 2, 'ext', 'essentia_ruby'), __FILE__)
 
 module EssentiaRuby
-  # Your code goes here...
+
+  include Essentia_ruby
+
 end
