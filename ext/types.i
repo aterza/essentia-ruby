@@ -6,5 +6,8 @@
   #include "types.h"
 %}
 
+%include std_string.i
+%include std_vector.i
+
 %include "config.h"
-%include "types.h"
+// %include "types.h"
