@@ -9,6 +9,7 @@ describe EssentiaRuby do
   it 'binds the proper constants' do
     consts = [EssentiaRuby::EssentiaException, EssentiaRuby::ForSingleFrames, EssentiaRuby::ForMultipleFrames,
               EssentiaRuby::ForAudioStream, EssentiaRuby::ForLargeAudioStream, EssentiaRuby::Parameter,
+              EssentiaRuby::EssentiaMapSSScmp,
               EssentiaRuby::DescriptionMap, ]
     consts.each { |c| expect(defined?(c)).to eq('constant'), c.to_s }
   end

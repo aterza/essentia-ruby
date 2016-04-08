@@ -1,5 +1,0 @@
-#!/bin/sh -x
-#
-# swig compiler command
-#
-swig -I. -I./essentia/src/essentia -I./essentia/src/algorithms/tonal/ -c++ -ruby essentia.i

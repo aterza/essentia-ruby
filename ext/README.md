@@ -17,22 +17,13 @@
 
 ## How to compile the SWIG wrapper
 
-* Create the `c++` wrapper with the following command:
+* You just need to run:
 ```sh
-$ swig -I. -I./essentia/src/essentia -I./essentia/src/algorithms/tonal/ -c++ -ruby essentia.i
-```
-* Create the `Makefile` with the following command:
+$ rake compile
+``
+  this will run `swig`, create the wrapper and compile it for you.
+* You may want to run the regression tests to check that all the `Essentia`
+  classes were created
 ```sh
-$ ruby extconf.rb
+$ rake # (rspec is run by default)
 ```
-* Compile the wrapper:
-```sh
-$ make
-```
-* Rapid test if the wrapper is doing the proper work:
-  ```sh
-  $ ruby -I. -e "require 'essentia_ruby'; puts defined?(Essentia_ruby::<type>).to_s"
-  ```
-  (substitute `<type>` with whatever class you are trying to wrap). This
-  should return `"constant"` or `"method"` if it works, and a blank line if it
-  doesn't.
