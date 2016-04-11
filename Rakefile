@@ -4,7 +4,10 @@ require "rspec/core/rake_task"
 RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
-task :compile => 'swig:compile'
+#
+# if we do not clobber the whole thing the process will not recompile
+#
+task :compile => [:clobber, 'swig:generate']
 
 require "rake/extensiontask"
 

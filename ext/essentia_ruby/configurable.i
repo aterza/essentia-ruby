@@ -8,3 +8,7 @@
   #include "configurable.h"
 %}
 %include "configurable.h"
+
+namespace essentia {
+  class Configurable;
+}

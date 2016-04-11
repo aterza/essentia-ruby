@@ -7,11 +7,12 @@
   #include "essentia.h"
 %}
 
-%import  "config.h"
+%include  "config.h"
 %include std_vector.i
+
 %include "types.i"
 %include "parameter.i"
-// %include "configurable.i"
+%include "configurable.i"
 // %include "algorithm.i"
 // %include "streamingalgorithmwrapper.i"
 // %include "dissonance.i"

@@ -17,6 +17,6 @@ $defs.unshift("-I#{tonal_dir}")
 $defs.push('-I/usr/include/tcl')
 $LDFLAGS += " -L#{lib_dir}"
 $libs = append_library($libs, 'essentia')
-$libs = append_library($libs, 'supc++')
+$libs = append_library($libs, 'supc++') if RUBY_PLATFORM =~ /linux/
 
 create_makefile("essentia_ruby")

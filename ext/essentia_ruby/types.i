@@ -6,6 +6,7 @@
   #include "types.h"
 %}
 
+%include std_except.i
 %include std_string.i
 %include std_vector.i
 
@@ -16,6 +17,7 @@
 // %template(mapSScmp) std::map<std::string, std::string, std::less<std::string>>;
 
 namespace essentia {
+%alias case_insensitive_str_cmp  "CaseInsensitiveStrCmp";
 %template(EssentiaMapSSScmp) EssentiaMap<std::string, std::string, string_cmp>;
-%typedef DescriptionMap EssentiaMap<std::string, std::string, string_cmp>;
+%typedef DescriptionMap EssentiaMapSSScmp;
 }
