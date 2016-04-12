@@ -7,7 +7,9 @@ describe EssentiaRuby do
   end
 
   it 'binds the proper constants' do
-    consts = [EssentiaRuby::EssentiaException, EssentiaRuby::ForSingleFrames, EssentiaRuby::ForMultipleFrames,
+    consts = [EssentiaRuby::EssentiaException, EssentiaRuby::Case_insensitive_str_cmp, EssentiaRuby::TypeProxy,
+              EssentiaRuby::InputBase, EssentiaRuby::OutputBase,
+              EssentiaRuby::ForSingleFrames, EssentiaRuby::ForMultipleFrames,
               EssentiaRuby::ForAudioStream, EssentiaRuby::ForLargeAudioStream,
               EssentiaRuby::Parameter, EssentiaRuby::ParameterMap, EssentiaRuby::ParameterVector,
               EssentiaRuby::EssentiaMapSSScmp,

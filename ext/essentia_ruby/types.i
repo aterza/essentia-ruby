@@ -19,5 +19,6 @@
 namespace essentia {
 %alias case_insensitive_str_cmp  "CaseInsensitiveStrCmp";
 %template(EssentiaMapSSScmp) EssentiaMap<std::string, std::string, string_cmp>;
-%typedef DescriptionMap EssentiaMapSSScmp;
+typedef DescriptionMap EssentiaMapSSScmp;
+class TypeProxy;
 }

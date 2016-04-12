@@ -11,8 +11,9 @@
 %include std_vector.i
 
 %include "types.i"
+%include "iotypewrappers.i"
 %include "parameter.i"
 %include "configurable.i"
-// %include "algorithm.i"
+%include "algorithm.i"
 // %include "streamingalgorithmwrapper.i"
 // %include "dissonance.i"
