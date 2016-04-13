@@ -18,3 +18,5 @@ mkmf.log
 /ext/essentia_ruby/essentia/src/essentia/config.h
 .DS_Store
 *~
+.byebug_history
+/log.out

@@ -1,8 +1,10 @@
 //
 // SWIG Wrapper for essentia
 //
-%include "typemaps.i"
 %module essentia_ruby
+%define EssentiaRuby essentia_ruby
+%enddef
+
 %{
   #include "essentia.h"
 %}
@@ -15,5 +17,6 @@
 %include "parameter.i"
 %include "configurable.i"
 %include "algorithm.i"
+// %include "streamingalgorithm.i"
 // %include "streamingalgorithmwrapper.i"
 // %include "dissonance.i"

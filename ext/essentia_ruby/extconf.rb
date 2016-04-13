@@ -19,4 +19,4 @@ $LDFLAGS += " -L#{lib_dir}"
 $libs = append_library($libs, 'essentia')
 $libs = append_library($libs, 'supc++') if RUBY_PLATFORM =~ /linux/
 
-create_makefile("essentia_ruby")
+create_makefile("lib/essentia_ruby/essentia_ruby")
