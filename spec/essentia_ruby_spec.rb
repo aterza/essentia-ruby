@@ -24,6 +24,7 @@ describe EssentiaRuby do
       'EssentiaRuby::Parameter' => Tester.new(EssentiaRuby::Parameter, ['test_arg']),
       'EssentiaRuby::ParameterMap' => Tester.new(EssentiaRuby::ParameterMap),
       'EssentiaRuby::ParameterVector' => Tester.new(EssentiaRuby::ParameterVector),
+      'EssentiaRuby::StreamingAlgorithmWrapper' => Tester.new(EssentiaRuby::StreamingAlgorithmWrapper),
     }
     consts_to_add = {
       'EssentiaRuby::InputBase' => Tester.new(EssentiaRuby::InputBase),
@@ -35,6 +36,10 @@ describe EssentiaRuby do
       'EssentiaRuby::ForLargeAudioStream' => Tester.new(EssentiaRuby::ForLargeAudioStream),
       'EssentiaRuby::Configurable' => Tester.new(EssentiaRuby::Configurable), 
       'EssentiaRuby::Algorithm' => Tester.new(EssentiaRuby::Algorithm),
+      'EssentiaRuby::SourceBase' => Tester.new(EssentiaRuby::SourceBase),
+      'EssentiaRuby::StreamingAlgorithm' => Tester.new(EssentiaRuby::StreamingAlgorithm),
+      'EssentiaRuby::Dissonance' => Tester.new(EssentiaRuby::Dissonance),
+      'EssentiaRuby::StreamingDissonance' => Tester.new(EssentiaRuby::StreamingDissonance),
     }
     @consts = Marshal.load(Marshal.dump(@creatable)) # this is a way to do a deep copy
     @consts.update(consts_to_add)
