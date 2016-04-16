@@ -1,3 +1,6 @@
 [submodule "ext/essentia"]
 	path = ext/essentia_ruby/essentia
 	url = https://github.com/MTG/essentia
+[submodule "ext/essentia_ruby/essentia-audio"]
+	path = ext/essentia_ruby/essentia-audio
+	url = https://github.com/MTG/essentia-audio

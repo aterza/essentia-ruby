@@ -13,10 +13,30 @@ module Essentia_ruby # this has to match the SWIG class one
 
   class AlgorithmFactory
     include Singleton
+
+    #
+    # +create+
+    #
+    # This is just a convenience method to be able to use +create+
+    # directly from the instance without recurring to the class method
+    #
+    def create(*args)
+      self.class.create(*args)
+    end
   end
 
   class StreamingAlgorithmFactory
     include Singleton
+
+    #
+    # +create+
+    #
+    # This is just a convenience method to be able to use +create+
+    # directly from the instance without recurring to the class method
+    #
+    def create(*args)
+      self.class.create(*args)
+    end
   end
 
 end
