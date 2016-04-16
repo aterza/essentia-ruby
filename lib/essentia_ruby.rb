@@ -1,8 +1,14 @@
-require "essentia_ruby/version"
 #
-# load the compiled version of the C++ library
+# load the compiled version of the C++ library along with everything else
 #
-EXT_INSTALL_PATH = Dir.glob(File.expand_path(File.join('..', 'essentia_ruby'), __FILE__))
-require File.join(EXT_INSTALL_PATH, 'essentia_ruby')
+module EssentiaRuby
+  LIB_PATH = File.expand_path(File.join('..', 'essentia_ruby'), __FILE__)
+end
+
+%w(
+  version
+  essentia_ruby
+  helpers
+).each { |f| require File.join(EssentiaRuby::LIB_PATH, f) }
 
 EssentiaRuby.include(Essentia_ruby)
