@@ -17,6 +17,7 @@ end
 describe EssentiaRuby do
 
   before(:example) do
+    @af = EssentiaRuby::AlgorithmFactory.instance
     @creatable = {
       'EssentiaRuby::EssentiaException' => Tester.new(EssentiaRuby::EssentiaException, ['test_arg']),
       'EssentiaRuby::CaseInsensitiveStrCmp' => Tester.new(EssentiaRuby::CaseInsensitiveStrCmp),
@@ -45,11 +46,7 @@ describe EssentiaRuby do
     }
     @consts = Marshal.load(Marshal.dump(@creatable)) # this is a way to do a deep copy
     @consts.update(consts_to_add)
-    @singletons = [ EssentiaRuby::AlgorithmFactory, EssentiaRuby::StreamingAlgorithmFactory ]
-    #
-    # create the singletons for the rest to work
-    #
-    @singletons.each { |s| s.instance }
+    @algorithms = ['MonoLoader', 'Dissonance']
   end
 
   it 'has a version number' do
@@ -68,11 +65,11 @@ describe EssentiaRuby do
     end
   end
 
-  it 'create singletons and they continue to be singletons' do
-    @singletons.each do
-      |s|
-      expect((sing = s.instance).class).to be(s)
-      expect(s.instance).to eq(sing)
+  it 'has a factory that can create algorithm objects' do
+    @algorithms.each do
+      |algo|
+      expect((a = @af.create(algo)).kind_of?(EssentiaRuby::Algorithm)).to be(true)
+      expect(a.respond_to?(:compute)).to be(true)
     end
   end
 
