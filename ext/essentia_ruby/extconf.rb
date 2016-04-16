@@ -7,16 +7,21 @@ src_dir = File.join(essentia_path, 'src')
 essentia_dir = File.join(src_dir, 'essentia')
 lib_dir = File.join(essentia_path, 'build', 'src')
 algorithms_dir = File.join(src_dir, 'algorithms')
+streaming_algorithms_dir = File.join(essentia_dir, 'streaming', 'algorithms')
 streaming_dir = File.join(essentia_dir, 'streaming')
-tonal_dir = File.join(algorithms_dir, 'tonal')
+scheduler_dir = File.join(essentia_dir, 'scheduler')
 
 $defs.unshift("-I#{streaming_dir}")
+$defs.unshift("-I#{scheduler_dir}")
+$defs.unshift("-I#{algorithms_dir}")
+$defs.unshift("-I#{streaming_algorithms_dir}")
 $defs.unshift("-I#{essentia_dir}")
 $defs.unshift("-iquote #{src_dir}")
-$defs.unshift("-I#{tonal_dir}")
 $defs.push('-I/usr/include/tcl')
 $LDFLAGS += " -L#{lib_dir}"
 $libs = append_library($libs, 'essentia')
 $libs = append_library($libs, 'supc++') if RUBY_PLATFORM =~ /linux/
+$libs = append_library($libs, 'avformat')
+$libs = append_library($libs, 'samplerate')
 
 create_makefile("lib/essentia_ruby/essentia_ruby")

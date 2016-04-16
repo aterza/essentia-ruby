@@ -25,6 +25,10 @@ describe EssentiaRuby do
       'EssentiaRuby::ParameterMap' => Tester.new(EssentiaRuby::ParameterMap),
       'EssentiaRuby::ParameterVector' => Tester.new(EssentiaRuby::ParameterVector),
       'EssentiaRuby::StreamingAlgorithmWrapper' => Tester.new(EssentiaRuby::StreamingAlgorithmWrapper),
+      'EssentiaRuby::Dissonance' => Tester.new(EssentiaRuby::Dissonance),
+      'EssentiaRuby::StreamingDissonance' => Tester.new(EssentiaRuby::StreamingDissonance),
+      'EssentiaRuby::MonoLoader' => Tester.new(EssentiaRuby::MonoLoader),
+      'EssentiaRuby::StreamingMonoLoader' => Tester.new(EssentiaRuby::StreamingMonoLoader),
     }
     consts_to_add = {
       'EssentiaRuby::InputBase' => Tester.new(EssentiaRuby::InputBase),
@@ -38,11 +42,14 @@ describe EssentiaRuby do
       'EssentiaRuby::Algorithm' => Tester.new(EssentiaRuby::Algorithm),
       'EssentiaRuby::SourceBase' => Tester.new(EssentiaRuby::SourceBase),
       'EssentiaRuby::StreamingAlgorithm' => Tester.new(EssentiaRuby::StreamingAlgorithm),
-      'EssentiaRuby::Dissonance' => Tester.new(EssentiaRuby::Dissonance),
-      'EssentiaRuby::StreamingDissonance' => Tester.new(EssentiaRuby::StreamingDissonance),
     }
     @consts = Marshal.load(Marshal.dump(@creatable)) # this is a way to do a deep copy
     @consts.update(consts_to_add)
+    @singletons = [ EssentiaRuby::AlgorithmFactory, EssentiaRuby::StreamingAlgorithmFactory ]
+    #
+    # create the singletons for the rest to work
+    #
+    @singletons.each { |s| s.instance }
   end
 
   it 'has a version number' do
@@ -58,6 +65,14 @@ describe EssentiaRuby do
       |t|
       expect(t.const.respond_to?(:new)).to be(true), t.const.to_s
       expect((obj = t.init_obj).class).to be(t.const), t.const.to_s
+    end
+  end
+
+  it 'create singletons and they continue to be singletons' do
+    @singletons.each do
+      |s|
+      expect((sing = s.instance).class).to be(s)
+      expect(s.instance).to eq(sing)
     end
   end
 
