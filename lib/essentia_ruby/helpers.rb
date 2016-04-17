@@ -3,5 +3,6 @@ module EssentiaRuby::Helpers
 end
 
 %w(
+  mono_loader
   dissonance
 ).each { |f| require File.join(EssentiaRuby::Helpers::HELPER_PATH, f) }
