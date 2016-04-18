@@ -1,9 +1,10 @@
 //
 // SWIG Wrapper for essentia's types
 //
-%module essentia_ruby
 %{
   #include "types.h"
+  std::vector<swig::GC_VALUE> NArray;
+  std::vector<essentia::Real> RArray;
 %}
 
 %include std_except.i
@@ -18,3 +19,9 @@
 namespace essentia {
   %template(DescriptionMap) EssentiaMap<std::string, std::string, string_cmp>;
 }
+
+%typemap(in) std::vector<essentia::Real> {
+}
+
+%template(NArray) std::vector<swig::GC_VALUE>;
+%template(RArray) std::vector<essentia::Real>;
