@@ -11,10 +11,10 @@
   {
     $action;
   }
-  catch(essentia::EssentiaException)
+  catch(essentia::EssentiaException &e)
   {
-    static VALUE err = rb_define_class("EssentiaRuby::EssentiaException", rb_eStandardError);
-    rb_raise(err, "Essentia error: " + err);
+    static VALUE err = rb_define_class("Essentia_ruby::EssentiaException", rb_eStandardError);
+    rb_raise(err, "Essentia error: %s", e.what());
   }
 }
 
