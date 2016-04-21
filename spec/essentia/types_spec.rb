@@ -54,3 +54,31 @@ describe EssentiaRuby::RealVector do
   end
 
 end
+
+describe EssentiaRuby::StringVector do
+
+  before :example do
+    @string_bag = [ 'blurp', 23.to_s, (16.0).to_s, (-36e-5).to_s, (23.23e18).to_s, 2323.to_s ]
+  end
+
+  it 'can be created with different arguments' do
+    expect((rv = EssentiaRuby::StringVector.new).class).to be(EssentiaRuby::StringVector)
+    expect((rv = EssentiaRuby::StringVector.new([ 23.to_s ])).class).to be(EssentiaRuby::StringVector)
+    expect((rv = EssentiaRuby::StringVector.new(@string_bag)).class).to be(EssentiaRuby::StringVector)
+  end
+
+  it 'behaves like a regular ruby array' do
+    expect((rv = EssentiaRuby::StringVector.new(@string_bag)).class).to be(EssentiaRuby::StringVector)
+    expect(rv[-1]).to eq(@string_bag[-1]), -1.to_s
+    rv.each_with_index { |v, idx| expect(v).to eq(@string_bag[idx]), idx.to_s }
+    [:each, :map, :size, :count].each { |method| expect(rv.respond_to?(method)).to be(true) }
+  end
+
+  it 'handles exceptional conditions gracefully' do
+    expect((rv = EssentiaRuby::StringVector.new(@string_bag)).class).to be(EssentiaRuby::StringVector)
+    expect(rv[rv.size + 3]).to be_nil
+    value = 23.23
+    expect { rv << value }.to raise_error(TypeError), "Real #{value} did not raise a TypeError as expected"
+  end
+
+end
