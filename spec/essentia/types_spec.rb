@@ -82,3 +82,40 @@ describe EssentiaRuby::StringVector do
   end
 
 end
+
+#
+# <tt>EssentiaRuby::DescriptorMap</tt>
+#
+# is essentially a C++ representation of a string-only ruby hash
+#
+describe EssentiaRuby::DescriptionMap do
+
+  before :example do
+    @hash = { 'one' => 23.to_s, 'two' => (16.0).to_s, 'three' => (-36e-5).to_s, 'four' => (23.23e18).to_s, 'five' => 2323.to_s }
+  end
+
+  it 'can be created with no arguments' do
+    expect((dm = EssentiaRuby::DescriptionMap.new).class).to be(EssentiaRuby::DescriptionMap)
+  end
+
+  it 'behaves like a (somewhat) regular ruby hash' do
+    expect((dm = EssentiaRuby::DescriptionMap.new).class).to be(EssentiaRuby::DescriptionMap)
+    @hash.each { |key, value| dm.insert(key, value) }
+    @hash.each { |key, value| expect(dm[key]).to eq(@hash[key]), key }
+  end
+
+  it 'responds to the :keys and :insert methods' do
+    expect((dm = EssentiaRuby::DescriptionMap.new).class).to be(EssentiaRuby::DescriptionMap)
+    [:keys, :insert].each { |method| expect(dm.respond_to?(method)).to be(true), method.to_s }
+  end
+
+  it 'handles exceptional conditions gracefully' do
+    expect((dm = EssentiaRuby::DescriptionMap.new).class).to be(EssentiaRuby::DescriptionMap)
+    @hash.each { |key, value| dm.insert(key, value) }
+    skip("TODO: add exception handling for all Essentia objects")
+    expect { dm['not existing'] }.to raise_error(EssentiaRuby::EssentiaException)
+    value = 23.23
+    expect { dm.insert('not valid', value) }.to raise_error(TypeError), "Real #{value} did not raise a TypeError as expected"
+  end
+
+end

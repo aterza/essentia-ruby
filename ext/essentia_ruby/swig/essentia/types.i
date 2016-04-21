@@ -27,11 +27,12 @@ namespace essentia {
        return (*$self)[key];
      }
 
-//   EssentiaMap<std::string, std::string, string_cmp> insert_hash(const std::string keys[], const std::string values[])
-//   {
-//     int size = 
-//     for(int i = 0
-//   }
+     void insert_hash(const std::vector<std::string> keys, const std::vector<std::string> values)
+     {
+       int size = keys.size();
+       for(int i = 0; i < size; ++i)
+         $self->insert(keys[i], values[i]);
+     }
   }
 
   //%typemap(in) EssentiaMap<std::string, std::string, string_cmp> (const std::string& key, const std::string& value)
