@@ -13,6 +13,7 @@
 %include std_vector.i
 
 %include "essentia/types.i"
+%include "essentia/exception.i"
 %include "essentia/iotypewrappers.i"
 %include "essentia/parameter.i"
 %include "essentia/configurable.i"

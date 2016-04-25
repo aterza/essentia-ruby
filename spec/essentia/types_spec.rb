@@ -112,10 +112,16 @@ describe EssentiaRuby::DescriptionMap do
   it 'handles exceptional conditions gracefully' do
     expect((dm = EssentiaRuby::DescriptionMap.new).class).to be(EssentiaRuby::DescriptionMap)
     @hash.each { |key, value| dm.insert(key, value) }
-    skip("TODO: add exception handling for all Essentia objects")
-    expect { dm['not existing'] }.to raise_error(EssentiaRuby::EssentiaException)
+#   expect { dm['not existing'] }.to raise_error(EssentiaRuby::EssentiaException)
     value = 23.23
     expect { dm.insert('not valid', value) }.to raise_error(TypeError), "Real #{value} did not raise a TypeError as expected"
+  end
+
+  it 'responds to the insert_hash_of_strings extension method' do
+    expect((dm = EssentiaRuby::DescriptionMap.new).class).to be(EssentiaRuby::DescriptionMap)
+    expect(dm.respond_to?(:insert_hash_of_strings)).to be(true)
+    dm.insert_hash_of_strings(@hash.keys, @hash.values)
+    @hash.each { |key, value| expect(dm[key]).to eq(@hash[key]) }
   end
 
 end
