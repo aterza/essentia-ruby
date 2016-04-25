@@ -1,5 +1,3 @@
-
-
 <CsoundSynthesizer>
 <CsOptions>
 -odac
@@ -18,29 +16,21 @@ audio oscil kamp,kfreq,1
 out audio
 endin
 
-instr 2
-kamp = p4
-kfreq = p5
-audio1 oscil kamp, kfreq,1
-out audio1
-endin 
-
-
 
 </CsInstruments>
 <CsScore>
 f1 0 4096 10 1 [1/2] [1/3] [1/4] [1/5] [1/6] [1/7] [1/8] [1/9] [1/10] [1/11] [1/12] [1/13] [1/14]
-i1 0 10 .8 1000
-i2 0 1  .8 2000
-i2 + 1  .8 1078.3
-i2 + 1  .8 2000
-i2 + 1  .8 1078.3
-i2 + 1  .8 2000
-i2 + 1  .8 1078.3
-i2 + 1  .8 2000
-i2 + 1  .8 1078.3
-i2 + 1  .8 2000
-i2 + 1  .8 1078.3
+i1 0 10 .5 1000
+i1 0 1  .5 2000
+i1 + 1  .5 1078.3
+i1 + 1  .5 2000
+i1 + 1  .5 1078.3
+i1 + 1  .5 2000
+i1 + 1  .5 1078.3
+i1 + 1  .5 2000
+i1 + 1  .5 1078.3
+i1 + 1  .5 2000
+i1 + 1  .5 1078.3
 
 </CsScore>
 </CsoundSynthesizer>

@@ -2,7 +2,7 @@ module EssentiaRuby
   module Helpers
 
     #
-    # <tt>dissonance(audio)</tt>
+    # <tt>dissonance(audio_filename)</tt>
     #
     # This algorithm calculates the sensory dissonance (to distinguish
     # from musical or theoretical  dissonance)  of  an  audio  signal.
@@ -22,12 +22,38 @@ module EssentiaRuby
     #   [2] Critical Band - Handbook for Acoustic Ecology http://www.sfu.ca/sonic-studio/handbook/Critical_Band.html
     #   [3] Bark Scale - Wikipedia, the free encyclopedia, http://en.wikipedia.org/wiki/Bark_scale
     #
-    def dissonance(audio)
+    # Arguments
+    # - +audio_filename+: the name of the audio file to be analyzed
+    #
+    # Output
+    # - an +EssentiaRuby::RealArray+ vector of dissonance values
+    #
+    def dissonance(audio_filename)
       #
-      # TODO:
-      # - read audio
-      # - extract magnitude and frequency vectors
+      # audio
       #
+      ml = create_mono_loader(audio_filename)
+      audio_buffer = EssentiaRuby::RealVector.new
+      ml.output('audio').set_real_vector(audio_buffer)
+      #
+      # spectral representation
+      #
+      int frame_size = 4096
+      int hop_size   = (frame_size / 4.0).to_i
+      fc = EssentiaRuby::AlgorithmFactory.create('FrameCreator', 'frameSize', frame_size, 'hopSize', hop_size)
+      w = EssentiaRuby::AlgorithmFactory.create('Windowing', 'type', 'blackmanharris62')
+      spec = EssentiaRuby::AlgorithmFactory.create('Spectrum')
+      #
+      # dissonance representation
+      #
+      diss = EssentiaRuby::AlgorithmFactory.create('Dissonance')
+      #
+      # connect modules together
+      #
+      fc.input('signal').set_real_vector(audio_buffer)
+      frame = EssentiaRuby.
+      #
+      # connect
       mags = nil; freqs = nil;
       compute_dissonance(mags, freqs)
     end

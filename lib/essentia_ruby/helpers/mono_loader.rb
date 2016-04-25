@@ -2,6 +2,13 @@ module EssentiaRuby
   module Helpers
 
     module MonoLoader
+
+      DEFAULT_MONOLOADER_OPTIONS = { 'sampleRate' => 44100, 'downmix' => 'mix' }
+
+      def create_mono_loader(filename, options = {})
+        options.update('filename' => filename)
+        EssentiaRuby::Helpers::CommonCreator.create('MonoLoader', options, DEFAULT_MONOLOADER_OPTIONS)
+      end
       #
       # <tt>mono_loader(filename, sample_rate = 44100.0, mix = 'mix')</tt>
       #
@@ -13,13 +20,9 @@ module EssentiaRuby
       # it returns the audio buffer loaded
       #
       def mono_loader(filename, sample_rate = 44100.0, mix = 'mix')
-        af = EssentiaRuby::AlgorithmFactory.instance
-        fn = EssentiaRuby::Parameter.new(filename)
-        sr = EssentiaRuby::Parameter.new(sample_rate)
-        mx = EssentiaRuby::Parameter.new(mix)
+        ml = create_mono_loader(filename, 'sampleRate' => sample_rate, 'downmix' => mix)
         audio_buffer = EssentiaRuby::RealVector.new
   
-        ml = af.create('MonoLoader', 'filename', fn, 'sampleRate', sr, 'downmix', mx)
         ml.output('audio').set_real_vector(audio_buffer)
 
         ml.compute

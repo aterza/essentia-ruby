@@ -16,6 +16,7 @@
 %include "essentia/exception.i"
 %include "essentia/iotypewrappers.i"
 %include "essentia/parameter.i"
+// %include "essentia/pool.i" // this does not work
 %include "essentia/configurable.i"
 %include "essentia/algorithm.i"
 %include "essentia/algorithm_factory.i"
