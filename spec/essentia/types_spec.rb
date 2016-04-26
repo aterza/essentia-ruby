@@ -125,3 +125,39 @@ describe EssentiaRuby::DescriptionMap do
   end
 
 end
+
+#
+# <tt>EssentiaRuby::RealNumber</tt>
+#
+# this is a data structure wrapper to be able to pass seamlessly real number
+# references to Essentia
+#
+describe EssentiaRuby::RealNumber do
+
+  before :example do
+    @numbers = [ 23.0, 3.3e12, -23e-8, 17, -13 ]
+    @eps = 0.000001
+  end
+
+  it 'can be created with no arguments' do
+    expect((rn = EssentiaRuby::RealNumber.new).class).to be(EssentiaRuby::RealNumber)
+    expect(rn.get).to be_within(@eps).of 0
+  end
+
+  it 'can handle any number' do
+    expect((rn = EssentiaRuby::RealNumber.new).class).to be(EssentiaRuby::RealNumber)
+    @numbers.each do
+      |n|
+      rn.set(n)
+      expect(rn.get).to be_within((n*@eps).abs).of(rn.number), "#{rn.get} <=> #{rn.number} (delta: #{(n*@eps).abs})"
+      expect(rn.get).to be_within((n*@eps).abs).of(n), "#{rn.get} <=> #{n} (delta: #{(n*@eps).abs})"
+    end
+  end
+
+  it 'allows to access its internals' do
+    expect((rn = EssentiaRuby::RealNumber.new).class).to be(EssentiaRuby::RealNumber)
+    expect((rn.number = @numbers.first)).to be_within(@eps.abs).of(@numbers.first), @numbers.first.to_s
+    expect(rn.get).to be_within(@eps.abs).of(@numbers.first), @numbers.first.to_s
+  end
+
+end

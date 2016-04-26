@@ -13,3 +13,5 @@ end
 ).each { |f| require File.join(EssentiaRuby::LIB_PATH, f) }
 
 EssentiaRuby.include(Essentia_ruby)
+
+include EssentiaRuby

@@ -1,9 +1,8 @@
 <CsoundSynthesizer>
 <CsOptions>
--odac
+-dWo ../dissonance_sqw_44100_mono.wav
 </CsOptions>
 <CsInstruments>
-
 sr = 44100
 ksmps = 10
 nchnls = 1
@@ -34,20 +33,3 @@ i1 + 1  .5 1078.3
 
 </CsScore>
 </CsoundSynthesizer>
-<bsbPanel>
- <label>Widgets</label>
- <objectName/>
- <x>0</x>
- <y>0</y>
- <width>380</width>
- <height>205</height>
- <visible>true</visible>
- <uuid/>
- <bgcolor mode="background">
-  <r>230</r>
-  <g>140</g>
-  <b>36</b>
- </bgcolor>
-</bsbPanel>
-<bsbPresets>
-</bsbPresets>

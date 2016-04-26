@@ -4,6 +4,7 @@
 %{
   #include <stdio.h>
   #include "types.h"
+  #include "real_number.h"
 %}
 
 %include std_except.i
@@ -15,6 +16,7 @@
 
 %include "config.h"
 %include "types.h"
+%include "real_number.h"
 
 %template(AnyVector) std::vector<swig::GC_VALUE>;
 %template(RealVector) std::vector<essentia::Real>;
@@ -84,4 +86,5 @@ namespace essentia {
     free((void *) $2);
     free((void *) $3);
   }
+
 }

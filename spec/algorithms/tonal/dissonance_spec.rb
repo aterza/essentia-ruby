@@ -2,8 +2,11 @@ require 'spec_helper'
 
 describe EssentiaRuby::Dissonance do
 
+  include EssentiaRuby::Helpers::Dissonance
+
   before :example do
     @d = EssentiaRuby::Dissonance.new
+    @audio_file = File.join(AUDIO_FIXTURES_DIR, 'dissonance_sqw_44100_mono.wav')
   end
 
   it 'is a child class of the EssentiaRuby::Algorithm class' do
@@ -15,21 +18,16 @@ describe EssentiaRuby::Dissonance do
   end
 
   it 'has a helper method' do
-    include EssentiaRuby::Helpers
-
     expect(defined?(:dissonance)).to eq('expression')
   end
 
-  it 'has a low_level helper method' do
-    include EssentiaRuby::Helpers
-
-    expect(defined?(:compute_dissonance)).to eq('expression')
+  it 'actually computes the dissonance' do
+    expect((d = dissonance(@audio_file)).class).to be(EssentiaRuby::RealVector)
+    expect(d.empty?).to be(false)
   end
   #
   # The next specs intend to replicate literally (as much as possible) the
   # tests provided with the python bindings native in Essentia
   #
-  it 'should have no dissonance when passed silent (empty) frames' do
-  end
 
 end
