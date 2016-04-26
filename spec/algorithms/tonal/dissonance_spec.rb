@@ -22,7 +22,7 @@ describe EssentiaRuby::Dissonance do
   end
 
   it 'actually computes the dissonance' do
-    expect((d = dissonance(@audio_file)).class).to be(EssentiaRuby::RealVector)
+    expect((d = dissonance(@audio_file)).class).to be(Array)
     expect(d.empty?).to be(false)
   end
   #

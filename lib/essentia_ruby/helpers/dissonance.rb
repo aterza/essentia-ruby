@@ -28,6 +28,7 @@ module EssentiaRuby
       # - a hash of options with the following first level fields (all optional):
       #   - FrameCutter => { options: 'frameSize' and 'hopSize' }
       #   - Windowing   => { options: 'type' }
+      #   - SpectralPeaks => { options: 'magnitudeThreshold' }
       #
       # Output
       # - an vector of dissonance values (real valued, one per frame)
@@ -36,8 +37,9 @@ module EssentiaRuby
       #
       DEFAULT_DISSONANCE_OPTIONS =
       {
-        'FrameCutter' => { 'frameSize' => 4096, 'hopSize' => 2048 },
-        'Windowing'   => { 'type' => 'blackmanharris62' },
+        'FrameCutter' => { 'frameSize' => 4096, 'hopSize' => 1024 },
+        'Windowing'   => { 'type' => 'hamming' },
+        'SpectralPeaks' => { 'magnitudeThreshold' => 0.05 },
       }
       def dissonance(audio_filename, options = {})
         af = EssentiaRuby::AlgorithmFactory.instance
@@ -53,7 +55,7 @@ module EssentiaRuby
         fc = EssentiaRuby::Helpers::CommonCreator.create('FrameCutter', options['FrameCutter'] || {}, DEFAULT_DISSONANCE_OPTIONS['FrameCutter'])
         w  = EssentiaRuby::Helpers::CommonCreator.create('Windowing', options['Windowing'] || {}, DEFAULT_DISSONANCE_OPTIONS['Windowing'])
         spec   = EssentiaRuby::Helpers::CommonCreator.create('Spectrum')
-        peaks  = EssentiaRuby::Helpers::CommonCreator.create('SpectralPeaks')
+        peaks  = EssentiaRuby::Helpers::CommonCreator.create('SpectralPeaks', options['SpectralPeaks'] || {}, DEFAULT_DISSONANCE_OPTIONS['SpectralPeaks'])
         #
         # dissonance representation
         #

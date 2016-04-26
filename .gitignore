@@ -20,3 +20,4 @@ mkmf.log
 *~
 .byebug_history
 /log.out
+/spec/fixtures/audio/*.wav

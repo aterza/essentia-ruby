@@ -3,7 +3,6 @@ module EssentiaRuby::Helpers
 end
 
 %w(
-  math
   common_creator
   mono_loader
   dissonance
