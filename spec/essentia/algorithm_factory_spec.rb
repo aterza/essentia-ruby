@@ -14,9 +14,7 @@ describe EssentiaRuby::AlgorithmFactory do
     p = EssentiaRuby::Parameter.new('blargh')
     key = 'zorgh'
     msg = "Essentia error: Trying to configure algorithm 'MonoLoader' with parameter '#{key}' but it only accepts the following ones: [downmix, filename, sampleRate]"
-    skip('the next expectation fails without apparent reason')
-    expect { @af.create('MonoLoader', key, p) }.to raise_error{ |error| expect(error.class).to eq(EssentiaRuby::EssentiaException) }
+    expect { @af.create('MonoLoader', key, p) }.to raise_error { |error| expect(error.message).to match(/\AEssentia error: Trying to configure algorithm/) }
   end
 
 end
-

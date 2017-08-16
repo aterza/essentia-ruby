@@ -12,8 +12,8 @@ namespace :essentia do
         Dir.glob(File.join('.', '*.csd')).each do
           |csd|
           basename = File.basename(csd, '.csd')
-          audio_file = basename + '.wav'
-          sh("csound -dWo ../#{audio_file} #{csd}")
+          audio_file_path = File.join('..', basename + '.wav')
+          sh("csound -dWo #{audio_file_path} #{csd}") unless uptodate?(audio_file_path, [ csd ])
         end
       end
     end
