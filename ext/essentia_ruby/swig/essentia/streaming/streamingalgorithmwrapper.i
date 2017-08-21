@@ -1,5 +1,5 @@
 //
-// SWIG Wrapper for essentia's Algorithm class
+// SWIG Wrapper for essentia's StreamingAlgorithm class
 //
 %module essentia_ruby
 %{

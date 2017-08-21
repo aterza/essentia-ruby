@@ -13,6 +13,7 @@ module EssentiaRuby
       # Arguments
       # - +audio_filename+: the name of the audio file to be analyzed
       # - a hash of options with the following first level fields (all optional):
+      #   - MonoLoader  => { options: 'downmix', 'sampleRate' }
       #   - FrameCutter => { options: 'frameSize' and 'hopSize' }
       #   - Windowing   => { options: 'type' }
       #   - SpectralPeaks => { options: 'magnitudeThreshold' }
@@ -26,13 +27,15 @@ module EssentiaRuby
         'SpectralPeaks' => { 'magnitudeThreshold' => 0.05 },
       }
       def common_algorithm_interface(audio_filename, options = {})
-        af = EssentiaRuby::AlgorithmFactory.instance
+        om = EssentiaRuby::OptionManager.new
+        om.handle(options)
+        #
+        # options
+        #
         #
         # audio
         #
-        ml = create_mono_loader(audio_filename)
-        audio_buffer = EssentiaRuby::RealVector.new
-        ml.output('audio').set_real_vector(audio_buffer)
+        (ml, audio_buffer) = create_mono_loader(audio_filename)
         #
         # spectral representation
         #

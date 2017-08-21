@@ -3,5 +3,8 @@ module EssentiaRuby::Models
 end
 
 %w(
+  option_set
+  option_manager
   algorithm_factory
+  dev_null
 ).each { |f| require File.join(EssentiaRuby::Models::MODEL_PATH, f) }

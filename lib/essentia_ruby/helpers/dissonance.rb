@@ -2,8 +2,28 @@ module EssentiaRuby
   module Helpers
 
     module Dissonance
+
+      DEFAULT_DISSONANCE_OPTIONS = {} # there are no options for +dissonance+
+
+      #
+      # <tt>create_dissonance(om, options = {})</tt>
+      #
+      # return a configured MonoLoader algorithm suitable to be used in
+      # streaming configurations.
+      #
+      # This algorithm takes no options.
+      #
+      def create_dissonance(om, options = {})
+        tag = Dissonance.algorithm_name
+        om = EssentiaRuby::Helpers::Option.handle(tag, DEFAULT_DISSONANCE_OPTIONS, options)
+        EssentiaRuby::Helpers::CommonCreator.create(ALGORITHM_NAME, om)
+      end
+
       #
       # <tt>dissonance(audio_filename, options = {})</tt>
+      #
+      # stand-alone version of the +dissonance+ algorithm. For a streaming
+      # version, use the +create_dissonance+ function.
       #
       # This algorithm calculates the sensory dissonance (to distinguish
       # from musical or theoretical  dissonance)  of  an  audio  signal.
@@ -38,10 +58,10 @@ module EssentiaRuby
 
       def dissonance(audio_filename, options = {})
 
-        diss = EssentiaRuby::Helpers::CommonCreator.create('Dissonance')
-
         res = common_algorithm_interface(audio_filename, options) do
           |freqs, mags, output|
+
+          diss = create_dissonance(options)
   
           diss.input('frequencies').set_real_vector(freqs)           # spectral peaks detector -> dissonance
           diss.input('magnitudes').set_real_vector(mags)
@@ -55,6 +75,7 @@ module EssentiaRuby
         #
         res
       end
+
     end
 
   end

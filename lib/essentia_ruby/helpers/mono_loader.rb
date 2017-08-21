@@ -3,34 +3,71 @@ module EssentiaRuby
 
     module MonoLoader
 
-      DEFAULT_MONOLOADER_OPTIONS = { 'sampleRate' => 44100, 'downmix' => 'mix' }
+      class << self
 
-      def create_mono_loader(filename, options = {})
-        options.update('filename' => filename)
-        EssentiaRuby::Helpers::CommonCreator.create('MonoLoader', options, DEFAULT_MONOLOADER_OPTIONS)
-      end
-      #
-      # <tt>mono_loader(filename, sample_rate = 44100.0, mix = 'mix')</tt>
-      #
-      # reads an audio file from +filename+, downmixes to mono, resamples it if
-      # the input sample rate does not match the desired output sample rate.
-      #
-      # mix can be 'left', 'right' or 'mix' (default)
-      #
-      # it returns the audio buffer loaded
-      #
-      def mono_loader(filename, sample_rate = 44100.0, mix = 'mix')
-        ml = create_mono_loader(filename, 'sampleRate' => sample_rate, 'downmix' => mix)
-        audio_buffer = EssentiaRuby::RealVector.new
+        DEFAULT_MONOLOADER_OPTIONS = { 'sampleRate' => 44100, 'downmix' => 'mix' }
   
-        ml.output('audio').set_real_vector(audio_buffer)
+        #
+        # <tt>create(filename, om, options = {})</tt>
+        #
+        # Arguments:
+        # * +filename+: the audio file to be read
+        # * +om+: the option manager to be used
+        # * +options+: the set of runtime options (optional)
+        #
+        # return a configured MonoLoader algorithm suitable to be used in
+        # streaming configurations. Its output can be retrieved like this:
+        #
+        # ```ruby
+        # om = EssentiaRuby::OptionManager.new
+        # ml = create(filename, om, options)
+        # connect(ml.output('audio'), whatever_sink)
+        # ```
+        # where +ml+ is the +MonoLoader+ algorithm instance, while
+        # +audio_output+ is an <tt>EssentiaRuby::RealVector</tt> which
+        # will contain the output samples
+        #
+        def create(filename, om, options = {})
+          tag = MonoLoader.algorithm_name
+          options.update('filename' => filename)
+          om.handle_defaults(tag, DEFAULT_MONOLOADER_OPTIONS)
+          om.handle_runtime_options({ tag => options })
+          EssentiaRuby::Helpers::CommonCreator.create(tag, om)
+        end
 
-        ml.compute
-
-        audio_buffer
       end
+
+# TODO: stand-alone algorithms must be moved in their 'stand_alone' directory
+#     #
+#     # <tt>mono_loader(filename, sink, options = {})</tt>
+#     #
+#     # stand alone mono_loader helper. If you need just the mono loader, just use
+#     # the +create_mono_loader+.
+#     #
+#     # It reads an audio file from +filename+, downmixes to mono, resamples it if
+#     # the input sample rate does not match the desired output sample rate.
+#     #
+#     # Arguments
+#     # - the output sink
+#     # - a hash of options with the following first level fields (all optional):
+#     # - +downmix+: 'left', 'right' or 'mix' (default)
+#     # - +sampleRate+: the output sampling rate (default: 44100)
+#     #
+#     # Output
+#     # - the mono loader itself
+#     #
+
+#     def mono_loader(filename, sink, options = {})
+#       om = EssentiaRuby::OptionManager.new
+#       ml = create_mono_loader(filename, om, options)
+#       connect(ml.output('audio'), sink)
+#       n = EssentiaRuby::Network.new(ml)
+# 
+#       n.run
+
+#       ml
+#     end
     end
 
   end
 end
-

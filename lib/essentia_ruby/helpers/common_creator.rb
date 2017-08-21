@@ -5,12 +5,9 @@ module EssentiaRuby
 
       class << self
 
-        def create(algo, options = {}, default_options = {})
-          opts = Marshal.load(Marshal.dump(default_options)) # deep hash copy
-          opts.merge!(options)
-          parms = {}
-          opts.each { |k, v| parms.update(k => EssentiaRuby::Parameter.new(v)) }
-          EssentiaRuby::AlgorithmFactory.instance.create(algo, *(parms.map { |k, v| [k, v] }.flatten))
+        def create(algo, om = EssentiaRuby::OptionManager.new)
+          params = om.has_key?(algo) ? om[algo].to_essentia_parameters : []
+          Essentia_ruby::StreamingAlgorithmFactory.instance.create(algo, *params)
         end
 
       end
