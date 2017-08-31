@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe EssentiaRuby::AlgorithmFactory do
+describe Essentia::AlgorithmFactory do
 
   before :example do
-    @af = EssentiaRuby::AlgorithmFactory.instance
+    @af = Essentia::AlgorithmFactory.instance
   end
 
   it 'responds to the create method' do
@@ -11,7 +11,7 @@ describe EssentiaRuby::AlgorithmFactory do
   end
 
   it 'raises the proper exceptions with informative messages if needed' do
-    p = EssentiaRuby::Parameter.new('blargh')
+    p = Essentia::Parameter.new('blargh')
     key = 'zorgh'
     msg = "Essentia error: Trying to configure algorithm 'MonoLoader' with parameter '#{key}' but it only accepts the following ones: [downmix, filename, sampleRate]"
     expect { @af.create('MonoLoader', key, p) }.to raise_error { |error| expect(error.message).to match(/\AEssentia error: Trying to configure algorithm/) }

@@ -1,3 +1,7 @@
+//
+// This is a handler for Essentia exceptions. There is no equivalent handler
+// in the c++ code, though. Everything is in types.h.
+//
 %{
   #include "types.h"
 %}
@@ -11,7 +15,7 @@
   }
   catch(const essentia::EssentiaException &e)
   {
-    static VALUE err = rb_define_class("Essentia_ruby::EssentiaException", rb_eStandardError);
+    static VALUE err = rb_define_class("Essentia::Exception", rb_eStandardError);
     rb_raise(err, "Essentia error: %s", e.what());
   }
 }

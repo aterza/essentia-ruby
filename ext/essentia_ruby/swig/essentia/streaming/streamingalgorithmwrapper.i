@@ -1,7 +1,6 @@
 //
 // SWIG Wrapper for essentia's StreamingAlgorithm class
 //
-%module essentia_ruby
 %{
   #include "streaming/streamingalgorithmwrapper.h"
 %}

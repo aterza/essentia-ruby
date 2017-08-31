@@ -1,7 +1,6 @@
 //
 // SWIG Wrapper for essentia's Configurable class
 //
-%module essentia_ruby
 %{
   #include "parameter.h"
   #include "types.h"

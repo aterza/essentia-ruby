@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe 'EssentiaRuby::real_vector_is_silent' do
+describe 'Essentia::real_vector_is_silent' do
 
-  include EssentiaRuby
+  include Essentia
 
   before :example do
     loader = [0.0] * 16
-    @empty_array = EssentiaRuby::RealVector.new(loader)
+    @empty_array = Essentia::RealVector.new(loader)
     loader = [[0.0] * 7, 1, [0.0] * 8].flatten
-    @full_array  = EssentiaRuby::RealVector.new(loader)
+    @full_array  = Essentia::RealVector.new(loader)
   end
 
   it 'returns true when no sound samples are present' do

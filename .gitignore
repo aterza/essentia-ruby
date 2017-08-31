@@ -13,8 +13,7 @@
 *.a
 mkmf.log
 /ext/essentia_ruby/Makefile
-/ext/essentia_ruby/essentia_wrap.c
-/ext/essentia_ruby/essentia_wrap.cxx
+/ext/essentia_ruby/essentia_ruby_wrap.*
 /ext/essentia_ruby/essentia/src/essentia/config.h
 .DS_Store
 *~

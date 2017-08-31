@@ -1,4 +1,4 @@
-# EssentiaRuby
+# Essentia
 
 TODO: Write a gem description
 
@@ -44,6 +44,16 @@ Or install it yourself as:
 
 `essentia_ruby` has heplers that can be used as methods or functions to run
 the desired analysis algorithm. You are welcome to add more helpers.
+
+Then you can do:
+
+```ruby
+
+require 'essentia'
+```
+and boum, you have the whole library.
+
+<!-- TODO: add sample code -->
 
 ## Contributing
 

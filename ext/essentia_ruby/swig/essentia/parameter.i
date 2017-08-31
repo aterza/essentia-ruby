@@ -1,7 +1,6 @@
 //
 // SWIG Wrapper for essentia's Parameter class
 //
-%module essentia_ruby
 %{
   #include "parameter.h"
 %}

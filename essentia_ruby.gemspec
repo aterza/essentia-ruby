@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'essentia_ruby/version'
+require 'essentia/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "essentia_ruby"
-  spec.version       = EssentiaRuby::VERSION
+  spec.version       = Essentia::Ruby::VERSION
   spec.authors       = ["Nicola Bernardini"]
   spec.email         = ['n.bernardini@conservatoriosantacecilia.it']
   spec.extensions    = ["ext/essentia_ruby/extconf.rb"]

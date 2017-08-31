@@ -1,5 +1,6 @@
-require "bundler/gem_tasks"
-require "rspec/core/rake_task"
+require 'bundler/gem_tasks'
+require 'rspec/core/rake_task'
+require 'byebug'
 
 RSpec::Core::RakeTask.new(:spec)
 
@@ -9,12 +10,30 @@ task :spec => 'essentia:audio:generate'
 #
 # if we do not clobber the whole thing the process will not recompile
 #
+desc 'rebuild the ruby wrapper for essentia from scratch'
 task :compile => [:clobber, 'swig:generate']
 
 require "rake/extensiontask"
 
-Rake::ExtensionTask.new('essentia_ruby') do |ext|
-  ext.lib_dir = "lib/essentia_ruby"
+EXT_DIR = File.join('ext', 'essentia_ruby')
+LIB_DIR = File.join('lib', 'essentia')
+
+EXTENSIONS =
+{
+  'essentia_ruby_wrap' => 'extconf_essentia.rb',
+  'essentia_standard_ruby_wrap' => 'extconf_essentia_standard.rb',
+# 'essentia_streaming_ruby_wrap' => 'extconf_essentia_streaming.rb',
+# 'essentia_streaming_algorithms_ruby_wrap' => 'extconf_essentia_streaming_algorithms.rb',
+# 'essentia_scheduler_ruby_wrap' => 'extconf_essentia_scheduler.rb',
+}
+
+EXTENSIONS.each do
+  |k, v|
+  Rake::ExtensionTask.new(k) do |ext|
+    ext.config_script = v
+    ext.ext_dir = EXT_DIR
+    ext.lib_dir = LIB_DIR
+  end
 end
 
 Dir.glob(File.join('.', 'lib', 'tasks', '*.rake')).each { |f| load f }
