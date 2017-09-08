@@ -10,12 +10,18 @@ task :spec => 'essentia:audio:generate'
 # if we do not clobber the whole thing the process will not recompile
 #
 desc 'rebuild the ruby wrapper for essentia from scratch'
-task :compile => [:clobber, 'swig:generate']
+task :compile => [:clobber, 'compile:essentia_ruby_wrap']
 
 require "rake/extensiontask"
 
-EXT_DIR = File.join('ext', 'essentia_ruby')
+EXT_DIR = File.join('ext', 'essentia_ruby', 'rice', 'essentia')
 LIB_DIR = File.join('lib', 'essentia')
+
+Rake::ExtensionTask.new('essentia_ruby_wrap') do
+  |ext|
+  ext.ext_dir = EXT_DIR
+  ext.lib_dir = LIB_DIR
+end
 
 #
 # What follows is an antique relic of a (failed) wrapping attempt with SWIG
