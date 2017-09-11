@@ -1,8 +1,9 @@
 #if !defined(_RICE_ESSENTIA_ALGORITHM_HPP_)
 # define _RICE_ESSENTIA_ALGORITHM_HPP_
 
+#include "essentia/parameter.h"
 #include "essentia/algorithm.h"
-#include "essentia/streaming/streamingalgorithm.h"
+#include "essentia/streaming/streamingalgorithmwrapper.h"
 
 #include "rice/Director.hpp"
 
@@ -38,6 +39,8 @@ namespace Rice
           essentia::standard::Algorithm::reset();
         }
 
+        // methods from superclass Configurable
+
         virtual void declareParameters()
         {
           getSelf().call("declare_parameters");
@@ -47,6 +50,37 @@ namespace Rice
         {
           raisePureVirtual();
         }
+
+        virtual void setParameters(const essentia::ParameterMap& params)
+        {
+          getSelf().call("set_parameters", params);
+        }
+
+        void default_setParameters(const essentia::ParameterMap& params)
+        {
+          this->setParameters(params);
+        }
+
+        virtual void configure(const essentia::ParameterMap& params)
+        {
+          getSelf().call("configure", params);
+        }
+
+        void default_configure(const essentia::ParameterMap& params)
+        {
+          this->configure(params);
+        }
+
+        virtual void configure()
+        {
+          getSelf().call("configure");
+        }
+
+        void default_configure()
+        {
+          this->configure();
+        }
+
       };
 
       void install_algorithm();
@@ -54,10 +88,11 @@ namespace Rice
 
     namespace Streaming
     {
-      class AlgorithmProxy : public essentia::streaming::Algorithm, public Rice::Director
+      class AlgorithmProxy : public essentia::streaming::StreamingAlgorithmWrapper, public Rice::Director
       {
 
         public:
+
         AlgorithmProxy(Rice::Object self) : Rice::Director(self) {}
 
         virtual essentia::streaming::AlgorithmStatus process()
@@ -88,7 +123,7 @@ namespace Rice
 
         void default_shouldStop(bool stop)
         {
-          essentia::streaming::Algorithm::shouldStop(stop);
+          this->shouldStop(stop);
         }
 
         virtual bool shouldStop() const
@@ -98,8 +133,10 @@ namespace Rice
 
         bool default_shouldStop() const
         {
-          return essentia::streaming::Algorithm::shouldStop();
+          return this->shouldStop();
         }
+
+        // methods from superclass Configurable
 
         virtual void declareParameters()
         {
@@ -110,6 +147,37 @@ namespace Rice
         {
           raisePureVirtual();
         }
+
+        virtual void setParameters(const essentia::ParameterMap& params)
+        {
+          getSelf().call("set_parameters", params);
+        }
+
+        void default_setParameters(const essentia::ParameterMap& params)
+        {
+          this->setParameters(params);
+        }
+
+        virtual void configure(const essentia::ParameterMap& params)
+        {
+          getSelf().call("configure", params);
+        }
+
+        void default_configure(const essentia::ParameterMap& params)
+        {
+          this->configure(params);
+        }
+
+        virtual void configure()
+        {
+          getSelf().call("configure");
+        }
+
+        void default_configure()
+        {
+          this->configure();
+        }
+
       };
 
       void install_algorithm();

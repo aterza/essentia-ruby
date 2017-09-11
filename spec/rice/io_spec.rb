@@ -15,7 +15,7 @@ describe Essentia::Standard::RealVectorInput do
   methods.each do
     |m|
     it "does have a #{m.to_s} method" do
-      expect(@dm.respond_to?(m)).to be true
+      expect(@rvi.respond_to?(m)).to be true
     end
   end
 

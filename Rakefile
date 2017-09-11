@@ -12,6 +12,9 @@ task :spec => 'essentia:audio:generate'
 desc 'rebuild the ruby wrapper for essentia from scratch'
 task :compile => [:clobber, 'compile:essentia_ruby_wrap']
 
+desc 'build the ruby wrapper for essentia'
+task :recompile => ['compile:essentia_ruby_wrap']
+
 require "rake/extensiontask"
 
 EXT_DIR = File.join('ext', 'essentia_ruby', 'rice', 'essentia')

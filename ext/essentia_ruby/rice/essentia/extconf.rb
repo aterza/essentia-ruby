@@ -2,6 +2,7 @@ require 'mkmf-rice'
 
 output_name = 'essentia_ruby_wrap'
 $objs = %w(
+        io_base.o
         io.o
         algorithm.o
         vectors.o
@@ -21,6 +22,7 @@ INCLUDEDIR  = RbConfig::CONFIG['includedir']
 HEADER_DIRS = [
   # First search locally
   File.join(ESSENTIA_LOCAL_DIR, 'src'),
+  File.join(ESSENTIA_LOCAL_DIR, 'src', 'essentia'),
 
   # Then search /opt/local for macports
   '/opt/local/include',

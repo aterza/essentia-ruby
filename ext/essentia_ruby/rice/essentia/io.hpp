@@ -10,10 +10,6 @@ namespace Rice
       void install_io();
     }
 
-//  namespace Streaming
-//  {
-//    void install_inputs();
-//  }
   }
 }
 

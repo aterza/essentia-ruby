@@ -9,9 +9,12 @@ extern "C" {
 
   void Init_essentia_ruby_wrap()
   {
+    void Rice::Essentia::Standard::install_io_base();
+
     Rice::Essentia::create_essentia_modules();
     Rice::Essentia::install_essentia_types();
     Rice::Essentia::setup_essentia();
+    Rice::Essentia::Standard::install_io_base();
     Rice::Essentia::Standard::install_io();
     Rice::Essentia::Standard::install_algorithm();
     Rice::Essentia::Streaming::install_algorithm();
