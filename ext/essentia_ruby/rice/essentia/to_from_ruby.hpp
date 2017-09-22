@@ -1,5 +1,5 @@
-#if !defined(_RICE_ESSENTIA_VECTORS_HPP_)
-# define _RICE_ESSENTIA_VECTORS_HPP_
+#if !defined(_RICE_ESSENTIA_TO_FROM_RUBY_HPP_)
+# define _RICE_ESSENTIA_TO_FROM_RUBY_HPP_
 
 // This is the file where we keep all the from_ruby/to_ruby specializations
 // which happen within Essentia. It was picked up directly from
@@ -51,6 +51,15 @@ namespace Rice
 
   } // namespace detail
 
+  //
+  // this is needed to be able to dereference void pointers
+  struct void_masker {};
+
 }
 
-#endif /* !defined(_RICE_ESSENTIA_VECTORS_HPP_) */
+// function prototypes
+
+template<> Rice::void_masker *from_ruby<Rice::void_masker *>(Rice::Object);
+template<> Rice::Object to_ruby<Rice::void_masker *>(Rice::void_masker *const &);
+
+#endif /* !defined(_RICE_ESSENTIA_TO_FROM_RUBY_HPP_) */

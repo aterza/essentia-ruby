@@ -8,7 +8,7 @@
 #include <essentia/types.h>
 #include "modules.hpp"
 #include "exception.hpp"
-#include "vectors.hpp"
+#include "to_from_ruby.hpp"
 
 namespace Rice {
     namespace Essentia {
