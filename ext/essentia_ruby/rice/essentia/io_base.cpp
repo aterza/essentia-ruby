@@ -21,10 +21,9 @@ namespace Rice
          RUBY_TRY
          {
            input_base_type =
-             define_class_under<essentia::standard::InputBase>(essentia_standard_module(), "InputBase")
+             define_class_under<essentia::standard::InputBase, essentia::TypeProxy>(essentia_standard_module(), "InputBase")
              .add_handler<essentia::EssentiaException>(handle_essentia_exception)
              .define_method("full_name", &essentia::standard::InputBase::fullName)
-             /* .define_method("set", &essentia::standard::InputBase::set) */
              .define_method("set_sink_first_token", &essentia::standard::InputBase::setSinkFirstToken)
              .define_method("set_sink_tokens", &essentia::standard::InputBase::setSinkTokens)
              ;
@@ -40,10 +39,9 @@ namespace Rice
          RUBY_TRY
          {
            output_base_type =
-             define_class_under<essentia::standard::OutputBase>(essentia_standard_module(), "OutputBase")
+             define_class_under<essentia::standard::OutputBase, essentia::TypeProxy>(essentia_standard_module(), "OutputBase")
              .add_handler<essentia::EssentiaException>(handle_essentia_exception)
              .define_method("full_name", &essentia::standard::OutputBase::fullName)
-             /* .define_method("set", &essentia::standard::OutputBase::set) */
              .define_method("set_source_first_token", &essentia::standard::OutputBase::setSourceFirstToken)
              .define_method("set_source_tokens", &essentia::standard::OutputBase::setSourceTokens)
              ;

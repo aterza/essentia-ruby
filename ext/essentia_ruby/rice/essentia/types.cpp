@@ -18,9 +18,7 @@ namespace Rice {
         type_info_type =
           define_class_under<essentia::TypeProxy>(essentia_module(), "TypeProxy")
           .define_director<TypeProxyProxy>()
-#if 0
-          .define_constructor(Rice::Constructor<TypeProxyProxy, Rice::Object>(), (Arg("parent_object"), Arg("name")))
-#endif
+          .define_constructor(Rice::Constructor<TypeProxyProxy, Rice::Object, const std::string&>(), (Arg("self"), Arg("name") = (std::string) "undefined"))
           .add_handler<essentia::EssentiaException>(handle_essentia_exception)
           .define_method("name", &TypeProxyProxy::name)
           .define_method("set_name", &TypeProxyProxy::setName)

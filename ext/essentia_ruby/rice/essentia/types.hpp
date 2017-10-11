@@ -23,10 +23,7 @@ namespace Rice {
     {
       public:
 
-      TypeProxyProxy(Rice::Object self, const std::string& name) : essentia::TypeProxy(name), Rice::Director(self) {}
-#if 0
-      TypeProxyProxy(Rice::Object self) : essentia::TypeProxy("Unset"), Rice::Director(self) {}
-#endif
+      TypeProxyProxy(Rice::Object self, const std::string& name = "undefined") : essentia::TypeProxy(name), Rice::Director(self) {}
 
       virtual const std::type_info& typeInfo() const
       {

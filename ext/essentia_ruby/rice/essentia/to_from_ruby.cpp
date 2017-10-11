@@ -24,24 +24,27 @@ to_ruby(Rice::void_masker *const &p)
   return result;
 }
 
+#if 0
   // std::type_info specialization:
   //
-template <std::type_info &>
+template <>
 std::type_info &
-from_ruby(Rice::Object x)
+from_ruby<std::type_info &>(Rice::Object x)
 {
   return (std::type_info &) x.value();
 }
 
-template <std::type_info &>
+template <>
 Rice::Object
-to_ruby(std::type_info const &r)
+to_ruby<std::type_info>(const std::type_info& r)
 {
-  Rice::Object result((VALUE) &r);
+  Rice::Object result((VALUE) r.name());
 
   return result;
 }
+#endif
 
+#if 0
 // vector specializations
 // put here all the specializations needed following the canvas provided
 // below
@@ -49,16 +52,16 @@ to_ruby(std::type_info const &r)
 //
 // vectors of strings
 //
-template <std::vector<std::string> *>
-typename Rice::detail::from_ruby_<std::vector<std::string> *>::Retval_T
-from_ruby(Rice::Object x)
+template <>
+Rice::detail::from_ruby_<std::vector<std::string> >::Retval_T
+from_ruby<std::vector<std::string> >(Rice::Object x)
 {
-   return Rice::detail::from_ruby_<std::vector<std::string> *>::convert(x);
+   return Rice::detail::from_ruby_<std::vector<std::string> >::convert(x);
 }
 
-template<std::vector<std::string> const &>
+template<>
 Rice::Object
-to_ruby(std::vector<std::string> const &aa)
+to_ruby<std::vector<std::string> const &>(std::vector<std::string> const &aa)
 {
   return Rice::detail::to_ruby_<std::vector<std::string> const &>::convert(aa);
 }
@@ -66,16 +69,17 @@ to_ruby(std::vector<std::string> const &aa)
 //
 // vectors of real numbers (samples)
 //
-template <std::vector<essentia::Real> *>
-typename Rice::detail::from_ruby_<std::vector<essentia::Real> *>::Retval_T
-from_ruby(Rice::Object x)
+template <>
+Rice::detail::from_ruby_<std::vector<essentia::Real> >::Retval_T
+from_ruby<std::vector<essentia::Real> >(Rice::Object x)
 {
-   return Rice::detail::from_ruby_<std::vector<essentia::Real> *>::convert(x);
+   return Rice::detail::from_ruby_<std::vector<essentia::Real> >::convert(x);
 }
 
-template<std::vector<essentia::Real> const &>
+template <>
 Rice::Object
-to_ruby(std::vector<essentia::Real> const &aa)
+to_ruby<std::vector<essentia::Real> const &>(std::vector<essentia::Real> const &aa)
 {
   return Rice::detail::to_ruby_<std::vector<essentia::Real> const &>::convert(aa);
 }
+#endif

@@ -2,6 +2,7 @@ require 'mkmf-rice'
 
 output_name = 'essentia_ruby_wrap'
 $objs = %w(
+        parameter.o
         io.o
         to_from_ruby.o
         types.o
@@ -63,6 +64,6 @@ with_cflags("-x c++") do
 end
 
 $CXX = 'clang++ -std=c++1y'
-$warnflags.gsub!(/ -Wno-packed-bitfield-compat/, '')
+$warnflags.gsub!(/ -Wno-packed-bitfield-compat/, ' -Wno-unknown-warning-option')
 
 create_makefile(output_name)

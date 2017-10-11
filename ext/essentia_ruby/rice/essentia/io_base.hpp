@@ -166,4 +166,3 @@ namespace Rice
 }
 
 #endif /* !defined(_RICE_ESSENTIA_IO_BASE_HPP_) */
-

@@ -25,11 +25,11 @@ namespace Rice
     {
       typedef std::vector<T> Retval_T;
 
-      static std::vector<T>
+      static std::vector<T> &
       convert(Rice::Object x)
       {
         Rice::Array a(x);
-        std::vector<T> result;
+        Retval_T result;
         result.reserve(a.size());
         for (Rice::Array::iterator cur = a.begin(); cur != a.end(); ++cur)
         {
@@ -62,4 +62,14 @@ namespace Rice
 template<> Rice::void_masker *from_ruby<Rice::void_masker *>(Rice::Object);
 template<> Rice::Object to_ruby<Rice::void_masker *>(Rice::void_masker *const &);
 
+#if 0
+template<> std::type_info& from_ruby<std::type_info &>(Rice::Object);
+template<> Rice::Object to_ruby<std::type_info>(const std::type_info &);
+
+template<> Rice::detail::from_ruby_<std::vector<std::string> >::Retval_T from_ruby<std::vector<std::string> >(Rice::Object);
+template<> Rice::Object to_ruby<std::vector<std::string> const &>(std::vector<std::string> const &);
+
+template<> Rice::detail::from_ruby_<std::vector<essentia::Real> *>::Retval_T from_ruby<std::vector<essentia::Real> *>(Rice::Object);
+template<> Rice::Object to_ruby<std::vector<essentia::Real> const &>(std::vector<essentia::Real> const &);
+#endif
 #endif /* !defined(_RICE_ESSENTIA_TO_FROM_RUBY_HPP_) */
