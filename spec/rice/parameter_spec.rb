@@ -137,3 +137,29 @@ describe Essentia::DoubleParameter do
   end
 
 end
+
+describe Essentia::UintParameter do
+
+  before :example do
+    @parameter_name = 232323232323232323232323
+    @p = Essentia::UintParameter.new(@parameter_name)
+  end
+
+  it 'has all the methods in place (Uint)' do
+    check_methods(@p)
+  end
+
+end
+
+describe Essentia::StereoSampleParameter do
+
+  before :example do
+    @parameter_name = [1.0, -1.0]
+    @p = Essentia::StereoSampleParameter.new(@parameter_name)
+  end
+
+  it 'has all the methods in place (StereoSample)' do
+    check_methods(@p)
+  end
+
+end

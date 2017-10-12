@@ -105,6 +105,8 @@ namespace Rice {
     static Rice::Data_Type<Rice::Essentia::BoolParameter> bool_parameter_type;
     static Rice::Data_Type<Rice::Essentia::IntParameter> int_parameter_type;
     static Rice::Data_Type<Rice::Essentia::DoubleParameter> double_parameter_type;
+    static Rice::Data_Type<Rice::Essentia::UintParameter> uint_parameter_type;
+    static Rice::Data_Type<Rice::Essentia::StereoSampleParameter> stereo_sample_parameter_type;
 
     static void
     install_specialized_parameters()
@@ -138,6 +140,18 @@ namespace Rice {
         double_parameter_type =
           define_class_under<Rice::Essentia::DoubleParameter, Rice::Essentia::ParameterBase>(essentia_module(), "DoubleParameter")
           .define_constructor(Constructor<Rice::Essentia::DoubleParameter, const double&>())
+          .add_handler<essentia::EssentiaException>(handle_essentia_exception)
+          ;
+
+        uint_parameter_type =
+          define_class_under<Rice::Essentia::UintParameter, Rice::Essentia::ParameterBase>(essentia_module(), "UintParameter")
+          .define_constructor(Constructor<Rice::Essentia::UintParameter, const uint&>())
+          .add_handler<essentia::EssentiaException>(handle_essentia_exception)
+          ;
+
+        stereo_sample_parameter_type =
+          define_class_under<Rice::Essentia::StereoSampleParameter, Rice::Essentia::ParameterBase>(essentia_module(), "StereoSampleParameter")
+          .define_constructor(Constructor<Rice::Essentia::StereoSampleParameter, const essentia::StereoSample&>())
           .add_handler<essentia::EssentiaException>(handle_essentia_exception)
           ;
       }

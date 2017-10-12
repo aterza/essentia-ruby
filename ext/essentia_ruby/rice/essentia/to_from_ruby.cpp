@@ -52,6 +52,20 @@ from_ruby<double *>(Rice::Object d)
   return (double *) &d.value();
 }
 
+template <>
+uint *
+from_ruby<uint *>(Rice::Object d)
+{
+  return (uint *) &d.value();
+}
+
+template <>
+essentia::StereoSample *
+from_ruby<essentia::StereoSample *>(Rice::Object ss)
+{
+  return (essentia::StereoSample *) &ss.value();
+}
+
 #if 0
 template <>
 Rice::Object

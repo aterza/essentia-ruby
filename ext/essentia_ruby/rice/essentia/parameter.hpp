@@ -23,9 +23,14 @@ namespace Rice
           return (ParameterBase&) essentia::Parameter::operator=(p);
         }
 
-        // sequence of ParameterBase constructors
+        // sequence of overloaded ParameterBase constructors
         ParameterBase(const std::string &s) : essentia::Parameter(s) {}
         ParameterBase(const essentia::Real &r) : essentia::Parameter(r) {}
+        ParameterBase(const bool &b) : essentia::Parameter(b) {}
+        ParameterBase(const int &i) : essentia::Parameter(i) {}
+        ParameterBase(const double &d) : essentia::Parameter(d) {}
+        ParameterBase(const uint &u) : essentia::Parameter(u) {}
+        ParameterBase(const essentia::StereoSample &ss) : essentia::Parameter(ss) {}
     };
 
     class StringParameter : public ParameterBase
@@ -61,6 +66,20 @@ namespace Rice
       public:
 
         DoubleParameter(const double &d) : ParameterBase(d) {}
+    };
+
+    class UintParameter : public ParameterBase
+    {
+      public:
+
+        UintParameter(const uint &u) : ParameterBase(u) {}
+    };
+
+    class StereoSampleParameter : public ParameterBase
+    {
+      public:
+
+        StereoSampleParameter(const essentia::StereoSample& ss) : ParameterBase(ss) {}
     };
 
     void install_parameters();
