@@ -38,6 +38,20 @@ from_ruby<bool *>(Rice::Object o)
   return (bool *) &o.value();
 }
 
+template <>
+int *
+from_ruby<int *>(Rice::Object i)
+{
+  return (int *) &i.value();
+}
+
+template <>
+double *
+from_ruby<double *>(Rice::Object d)
+{
+  return (double *) &d.value();
+}
+
 #if 0
 template <>
 Rice::Object

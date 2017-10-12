@@ -49,6 +49,20 @@ namespace Rice
         BoolParameter(const bool &b) : ParameterBase(b) {}
     };
 
+    class IntParameter : public ParameterBase
+    {
+      public:
+
+        IntParameter(const int &i) : ParameterBase(i) {}
+    };
+
+    class DoubleParameter : public ParameterBase
+    {
+      public:
+
+        DoubleParameter(const double &d) : ParameterBase(d) {}
+    };
+
     void install_parameters();
   }
 }

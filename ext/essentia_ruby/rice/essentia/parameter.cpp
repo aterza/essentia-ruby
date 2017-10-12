@@ -103,6 +103,8 @@ namespace Rice {
     static Rice::Data_Type<Rice::Essentia::StringParameter> string_parameter_type;
     static Rice::Data_Type<Rice::Essentia::RealParameter> real_parameter_type;
     static Rice::Data_Type<Rice::Essentia::BoolParameter> bool_parameter_type;
+    static Rice::Data_Type<Rice::Essentia::IntParameter> int_parameter_type;
+    static Rice::Data_Type<Rice::Essentia::DoubleParameter> double_parameter_type;
 
     static void
     install_specialized_parameters()
@@ -124,6 +126,18 @@ namespace Rice {
         bool_parameter_type =
           define_class_under<Rice::Essentia::BoolParameter, Rice::Essentia::ParameterBase>(essentia_module(), "BoolParameter")
           .define_constructor(Constructor<Rice::Essentia::BoolParameter, const bool&>())
+          .add_handler<essentia::EssentiaException>(handle_essentia_exception)
+          ;
+
+        int_parameter_type =
+          define_class_under<Rice::Essentia::IntParameter, Rice::Essentia::ParameterBase>(essentia_module(), "IntParameter")
+          .define_constructor(Constructor<Rice::Essentia::IntParameter, const int&>())
+          .add_handler<essentia::EssentiaException>(handle_essentia_exception)
+          ;
+
+        double_parameter_type =
+          define_class_under<Rice::Essentia::DoubleParameter, Rice::Essentia::ParameterBase>(essentia_module(), "DoubleParameter")
+          .define_constructor(Constructor<Rice::Essentia::DoubleParameter, const double&>())
           .add_handler<essentia::EssentiaException>(handle_essentia_exception)
           ;
       }

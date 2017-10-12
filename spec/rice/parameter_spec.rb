@@ -111,3 +111,29 @@ describe Essentia::BoolParameter do
   end
 
 end
+
+describe Essentia::IntParameter do
+
+  before :example do
+    @parameter_name = 23.to_i
+    @p = Essentia::IntParameter.new(@parameter_name)
+  end
+
+  it 'has all the methods in place (Int)' do
+    check_methods(@p)
+  end
+
+end
+
+describe Essentia::DoubleParameter do
+
+  before :example do
+    @parameter_name = Math::PI
+    @p = Essentia::DoubleParameter.new(@parameter_name)
+  end
+
+  it 'has all the methods in place (Double)' do
+    check_methods(@p)
+  end
+
+end
