@@ -21,3 +21,5 @@ mkmf.log
 /log.out
 /spec/fixtures/audio/*.wav
 /ext/essentia_ruby/rice/learn
+
+TODO

@@ -72,7 +72,7 @@ namespace Rice {
           .define_method("!=", &Rice::Essentia::ParameterBase::operator!=)
           .define_method("type", &Rice::Essentia::ParameterBase::type)
           .define_method("is_configured?", &Rice::Essentia::ParameterBase::isConfigured)
-          .define_method("to_s", &Rice::Essentia::ParameterBase::toString)
+          .define_method("to_s", &Rice::Essentia::ParameterBase::toString, (Arg("precision") = 12))
           .define_method("downcase", &Rice::Essentia::ParameterBase::toLower)
           .define_method("to_boolean", &Rice::Essentia::ParameterBase::toBool)
           .define_method("to_double", &Rice::Essentia::ParameterBase::toDouble)

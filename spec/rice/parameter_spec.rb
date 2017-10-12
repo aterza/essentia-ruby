@@ -76,12 +76,23 @@ end
 describe Essentia::StringParameter do
 
   before :example do
-    @parameter_name = "test"
-    @p = Essentia::StringParameter.new(@parameter_name)
+    @parameter_value = "TEST test"
+    @p = Essentia::StringParameter.new(@parameter_value)
+    @not_p = Essentia::StringParameter.new("not Test")
   end
 
   it 'has all the methods in place (String)' do
     check_methods(@p)
+  end
+
+  it 'actually does work' do
+    expect(@p.type).to eq(Essentia::ParamType::STRING)
+    expect(@p.to_s).to eq(@parameter_value)
+    expect(@p.downcase).to eq(@parameter_value.downcase)
+    expect(@p == @p).to be true
+    expect(@p == @not_p).to be false
+    expect(@p != @not_p).to be true
+    expect(@p.is_configured?).to be true
   end
 
 end
@@ -89,8 +100,8 @@ end
 describe Essentia::RealParameter do
 
   before :example do
-    @parameter_name = 23.23
-    @p = Essentia::RealParameter.new(@parameter_name)
+    @parameter_value = 23.23
+    @p = Essentia::RealParameter.new(@parameter_value)
   end
 
   it 'has all the methods in place (Real)' do
@@ -102,8 +113,8 @@ end
 describe Essentia::BoolParameter do
 
   before :example do
-    @parameter_name = true
-    @p = Essentia::BoolParameter.new(@parameter_name)
+    @parameter_value = true
+    @p = Essentia::BoolParameter.new(@parameter_value)
   end
 
   it 'has all the methods in place (Bool)' do
@@ -115,8 +126,8 @@ end
 describe Essentia::IntParameter do
 
   before :example do
-    @parameter_name = 23.to_i
-    @p = Essentia::IntParameter.new(@parameter_name)
+    @parameter_value = 23.to_i
+    @p = Essentia::IntParameter.new(@parameter_value)
   end
 
   it 'has all the methods in place (Int)' do
@@ -128,8 +139,8 @@ end
 describe Essentia::DoubleParameter do
 
   before :example do
-    @parameter_name = Math::PI
-    @p = Essentia::DoubleParameter.new(@parameter_name)
+    @parameter_value = Math::PI
+    @p = Essentia::DoubleParameter.new(@parameter_value)
   end
 
   it 'has all the methods in place (Double)' do
@@ -141,8 +152,8 @@ end
 describe Essentia::UintParameter do
 
   before :example do
-    @parameter_name = 232323232323232323232323
-    @p = Essentia::UintParameter.new(@parameter_name)
+    @parameter_value = 232323232323232323232323
+    @p = Essentia::UintParameter.new(@parameter_value)
   end
 
   it 'has all the methods in place (Uint)' do
@@ -154,8 +165,8 @@ end
 describe Essentia::StereoSampleParameter do
 
   before :example do
-    @parameter_name = [1.0, -1.0]
-    @p = Essentia::StereoSampleParameter.new(@parameter_name)
+    @parameter_value = [1.0, -1.0]
+    @p = Essentia::StereoSampleParameter.new(@parameter_value)
   end
 
   it 'has all the methods in place (StereoSample)' do
