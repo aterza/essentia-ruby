@@ -1,6 +1,8 @@
 #if !defined(_RICE_ESSENTIA_TO_FROM_RUBY_HPP_)
 # define _RICE_ESSENTIA_TO_FROM_RUBY_HPP_
 
+#include <essentia/types.h>
+
 // This is the file where we keep all the from_ruby/to_ruby specializations
 // which happen within Essentia. It was picked up directly from
 //
@@ -61,6 +63,13 @@ namespace Rice
 
 template<> Rice::void_masker *from_ruby<Rice::void_masker *>(Rice::Object);
 template<> Rice::Object to_ruby<Rice::void_masker *>(Rice::void_masker *const &);
+
+template<> essentia::Real *from_ruby<essentia::Real *>(Rice::Object);
+template<> bool *from_ruby<bool *>(Rice::Object);
+
+#if 0
+template<> Rice::Object to_ruby<essentia::Real>(const essentia::Real&);
+#endif
 
 #if 0
 template<> std::type_info& from_ruby<std::type_info &>(Rice::Object);

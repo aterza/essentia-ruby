@@ -48,6 +48,8 @@ namespace Rice {
     static Rice::Data_Type<essentia::Parameter> parameter_type;
     static Rice::Data_Type<Rice::Essentia::ParameterBase> parameter_base_type;
 
+    static void install_specialized_parameters();
+
     void
     install_parameters()
     {
@@ -91,6 +93,38 @@ namespace Rice {
           .define_method("to_map_vector_string", &Rice::Essentia::ParameterBase::toMapVectorString)
           .define_method("to_map_real", &Rice::Essentia::ParameterBase::toMapReal)
           .define_method("to_matrix_real", &Rice::Essentia::ParameterBase::toMatrixReal)
+          ;
+
+        install_specialized_parameters();
+      }
+      RUBY_CATCH
+    }
+
+    static Rice::Data_Type<Rice::Essentia::StringParameter> string_parameter_type;
+    static Rice::Data_Type<Rice::Essentia::RealParameter> real_parameter_type;
+    static Rice::Data_Type<Rice::Essentia::BoolParameter> bool_parameter_type;
+
+    static void
+    install_specialized_parameters()
+    {
+      RUBY_TRY
+      {
+        string_parameter_type =
+          define_class_under<Rice::Essentia::StringParameter, Rice::Essentia::ParameterBase>(essentia_module(), "StringParameter")
+          .define_constructor(Constructor<Rice::Essentia::StringParameter, const std::string&>())
+          .add_handler<essentia::EssentiaException>(handle_essentia_exception)
+          ;
+
+        real_parameter_type =
+          define_class_under<Rice::Essentia::RealParameter, Rice::Essentia::ParameterBase>(essentia_module(), "RealParameter")
+          .define_constructor(Constructor<Rice::Essentia::RealParameter, const essentia::Real&>())
+          .add_handler<essentia::EssentiaException>(handle_essentia_exception)
+          ;
+
+        bool_parameter_type =
+          define_class_under<Rice::Essentia::BoolParameter, Rice::Essentia::ParameterBase>(essentia_module(), "BoolParameter")
+          .define_constructor(Constructor<Rice::Essentia::BoolParameter, const bool&>())
+          .add_handler<essentia::EssentiaException>(handle_essentia_exception)
           ;
       }
       RUBY_CATCH

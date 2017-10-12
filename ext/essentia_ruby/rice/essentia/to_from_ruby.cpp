@@ -24,6 +24,31 @@ to_ruby(Rice::void_masker *const &p)
   return result;
 }
 
+template <>
+essentia::Real *
+from_ruby<essentia::Real *>(Rice::Object o)
+{
+  return (essentia::Real *) &o.value();
+}
+
+template <>
+bool *
+from_ruby<bool *>(Rice::Object o)
+{
+  return (bool *) &o.value();
+}
+
+#if 0
+template <>
+Rice::Object
+to_ruby<essentia::Real>(const essentia::Real& r)
+{
+  Rice::Object result((VALUE) r);
+
+  return result;
+}
+#endif
+
 #if 0
   // std::type_info specialization:
   //
