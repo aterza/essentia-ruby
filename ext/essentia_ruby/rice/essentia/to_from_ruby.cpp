@@ -28,7 +28,11 @@ template <>
 essentia::Real *
 from_ruby<essentia::Real *>(Rice::Object o)
 {
-  return (essentia::Real *) &o.value();
+   essentia::Real *r = new essentia::Real;
+   double d;
+   Rice::protect(Rice::detail::num2dbl, o, &d);
+   *r = (essentia::Real) d;
+   return r;
 }
 
 template <>

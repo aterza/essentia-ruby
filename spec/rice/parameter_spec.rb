@@ -102,10 +102,21 @@ describe Essentia::RealParameter do
   before :example do
     @parameter_value = 23.23
     @p = Essentia::RealParameter.new(@parameter_value)
+    @not_p = Essentia::RealParameter.new(@parameter_value / 2.0)
   end
 
   it 'has all the methods in place (Real)' do
     check_methods(@p)
+  end
+
+  it 'actually does work' do
+    expect(@p.type).to eq(Essentia::ParamType::REAL)
+    expect(@p.to_real).to be_within(0.00001).of(@parameter_value)
+    expect(@p.to_s.size).to eq(13)
+    expect(@p == @p).to be true
+    expect(@p == @not_p).to be false
+    expect(@p != @not_p).to be true
+    expect(@p.is_configured?).to be true
   end
 
 end
