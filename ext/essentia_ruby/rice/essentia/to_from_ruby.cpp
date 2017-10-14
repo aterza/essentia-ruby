@@ -46,14 +46,18 @@ template <>
 int *
 from_ruby<int *>(Rice::Object i)
 {
-  return (int *) &i.value();
+  int *p = new int;
+  *p = from_ruby<int>(i);
+  return p;
 }
 
 template <>
 double *
 from_ruby<double *>(Rice::Object d)
 {
-  return (double *) &d.value();
+  double *p = new double;
+  Rice::protect(Rice::detail::num2dbl, d, p);
+  return p;
 }
 
 template <>

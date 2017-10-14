@@ -103,6 +103,7 @@ describe Essentia::RealParameter do
     @parameter_value = 23.23
     @p = Essentia::RealParameter.new(@parameter_value)
     @not_p = Essentia::RealParameter.new(@parameter_value / 2.0)
+    @wanted_precision = 20
   end
 
   it 'has all the methods in place (Real)' do
@@ -111,8 +112,9 @@ describe Essentia::RealParameter do
 
   it 'actually does work' do
     expect(@p.type).to eq(Essentia::ParamType::REAL)
-    expect(@p.to_real).to be_within(0.00001).of(@parameter_value)
+    expect(@p.to_real).to be_within(1.0e-5).of(@parameter_value)
     expect(@p.to_s.size).to eq(13)
+    expect(@p.to_s(@wanted_precision).size).to eq(@wanted_precision+1)
     expect(@p == @p).to be true
     expect(@p == @not_p).to be false
     expect(@p != @not_p).to be true
@@ -126,10 +128,21 @@ describe Essentia::BoolParameter do
   before :example do
     @parameter_value = true
     @p = Essentia::BoolParameter.new(@parameter_value)
+    @not_p = Essentia::BoolParameter.new(!@parameter_value)
   end
 
   it 'has all the methods in place (Bool)' do
     check_methods(@p)
+  end
+
+  it 'actually does work' do
+    expect(@p.type).to eq(Essentia::ParamType::BOOL)
+    expect(@p.to_boolean).to be true
+    expect(@not_p.to_boolean).to be false
+    expect(@p == @p).to be true
+    expect(@p == @not_p).to be false
+    expect(@p != @not_p).to be true
+    expect(@p.is_configured?).to be true
   end
 
 end
@@ -139,10 +152,22 @@ describe Essentia::IntParameter do
   before :example do
     @parameter_value = 23.to_i
     @p = Essentia::IntParameter.new(@parameter_value)
+    @not_p = Essentia::IntParameter.new(@parameter_value / 2)
   end
 
   it 'has all the methods in place (Int)' do
     check_methods(@p)
+  end
+
+  it 'actually does work' do
+    expect(@p.type).to eq(Essentia::ParamType::INT)
+    expect(@p.to_i).to eq(@parameter_value)
+    expect(@p.to_s).to eq(@parameter_value.to_s)
+    expect(@p.to_s.size).to eq(@parameter_value.to_s.size)
+    expect(@p == @p).to be true
+    expect(@p == @not_p).to be false
+    expect(@p != @not_p).to be true
+    expect(@p.is_configured?).to be true
   end
 
 end
@@ -152,10 +177,24 @@ describe Essentia::DoubleParameter do
   before :example do
     @parameter_value = Math::PI
     @p = Essentia::DoubleParameter.new(@parameter_value)
+    @not_p = Essentia::DoubleParameter.new(Math::sqrt(@parameter_value))
+    @wanted_precision = 20
   end
 
   it 'has all the methods in place (Double)' do
     check_methods(@p)
+  end
+
+  it 'actually does work' do
+    expect(@p.type).to eq(Essentia::ParamType::REAL)
+    expect(@p.to_double).to be_within(1.0e-6).of(@parameter_value)
+    expect(@p.to_s(6)).to eq(@parameter_value.to_s[0..6])
+    expect(@p.to_s.size).to eq(13)
+    expect(@p.to_s(@wanted_precision).size).to eq(@wanted_precision+1)
+    expect(@p == @p).to be true
+    expect(@p == @not_p).to be false
+    expect(@p != @not_p).to be true
+    expect(@p.is_configured?).to be true
   end
 
 end
