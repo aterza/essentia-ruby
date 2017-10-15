@@ -61,10 +61,13 @@ from_ruby<double *>(Rice::Object d)
 }
 
 template <>
-uint *
-from_ruby<uint *>(Rice::Object d)
+unsigned int *
+from_ruby<unsigned int *>(Rice::Object u)
 {
-  return (uint *) &d.value();
+  unsigned int *p = new unsigned int;
+
+  *p = from_ruby<unsigned int>(u);
+  return p;
 }
 
 template <>

@@ -201,13 +201,28 @@ end
 
 describe Essentia::UintParameter do
 
+  #
+  # over 2**24 we see strange aberrations in numbers
+  #
   before :example do
-    @parameter_value = 232323232323232323232323
+    @parameter_value = ((2**24)-1)
     @p = Essentia::UintParameter.new(@parameter_value)
+    @not_p = Essentia::UintParameter.new(@parameter_value / 2)
   end
 
   it 'has all the methods in place (Uint)' do
     check_methods(@p)
+  end
+
+  it 'actually does work' do
+    expect(@p.type).to eq(Essentia::ParamType::INT)
+    expect(@p.to_i).to eq(@parameter_value)
+    expect(@p.to_s(10)).to eq(@parameter_value.to_s[0..9])
+    expect(@p.to_s.size).to eq(@parameter_value.to_s.size)
+    expect(@p == @p).to be true
+    expect(@p == @not_p).to be false
+    expect(@p != @not_p).to be true
+    expect(@p.is_configured?).to be true
   end
 
 end
