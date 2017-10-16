@@ -230,12 +230,23 @@ end
 describe Essentia::StereoSampleParameter do
 
   before :example do
-    @parameter_value = [1.0, -1.0]
+    @parameter_value = [0.999, -0.999]
     @p = Essentia::StereoSampleParameter.new(@parameter_value)
+    @not_p = Essentia::StereoSampleParameter.new(@parameter_value.map { |x| x/2.0 })
   end
 
   it 'has all the methods in place (StereoSample)' do
     check_methods(@p)
+  end
+
+  it 'actually does work' do
+    expect(@p.type).to eq(Essentia::ParamType::STEREOSAMPLE)
+    a = @p.to_stereo_sample
+    a.each_index { |idx| expect(a[idx]).to be_within(1e-6).of(@parameter_value[idx]) }
+    expect(@p == @p).to be true
+    expect(@p == @not_p).to be false
+    expect(@p != @not_p).to be true
+    expect(@p.is_configured?).to be true
   end
 
 end

@@ -72,9 +72,27 @@ from_ruby<unsigned int *>(Rice::Object u)
 
 template <>
 essentia::StereoSample *
-from_ruby<essentia::StereoSample *>(Rice::Object ss)
+from_ruby<essentia::StereoSample *>(Rice::Object o)
 {
-  return (essentia::StereoSample *) &ss.value();
+  Rice::Array ss(o);
+  essentia::StereoSample *result = new essentia::StereoSample;
+
+  result->first = from_ruby<essentia::Real>(ss[0]);
+  result->second = from_ruby<essentia::Real>(ss[1]);
+
+  return result;
+}
+
+template <>
+Rice::Object
+to_ruby<essentia::StereoSample>(essentia::StereoSample const & ss)
+{
+  Rice::Array a;
+
+  a.push(ss.left());
+  a.push(ss.right());
+
+  return a;
 }
 
 #if 0

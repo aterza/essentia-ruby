@@ -70,6 +70,8 @@ template<> int *from_ruby<int *>(Rice::Object);
 template<> double *from_ruby<double *>(Rice::Object);
 template<> uint *from_ruby<uint *>(Rice::Object);
 template<> essentia::StereoSample *from_ruby<essentia::StereoSample *>(Rice::Object);
+template<> Rice::Object to_ruby<essentia::StereoSample>(essentia::StereoSample const &);
+
 
 #if 0
 template<> Rice::Object to_ruby<essentia::Real>(const essentia::Real&);
