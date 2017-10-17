@@ -33,6 +33,7 @@ namespace Rice
         ParameterBase(const essentia::StereoSample &ss) : essentia::Parameter(ss) {}
         ParameterBase(const std::vector<essentia::Real> &rv) : essentia::Parameter(rv) {}
         ParameterBase(const std::vector<std::string> &sv) : essentia::Parameter(sv) {}
+        ParameterBase(const std::vector<bool> &bv) : essentia::Parameter(bv) {}
     };
 
     class StringParameter : public ParameterBase
@@ -96,6 +97,13 @@ namespace Rice
       public:
 
         VectorStringParameter(const std::vector<std::string>& sv) : ParameterBase(sv) {}
+    };
+
+    class VectorBoolParameter : public ParameterBase
+    {
+      public:
+
+        VectorBoolParameter(const std::vector<bool>& bv) : ParameterBase(bv) {}
     };
 
     void install_parameters();

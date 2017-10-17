@@ -298,3 +298,27 @@ describe Essentia::VectorStringParameter do
   end
 
 end
+
+describe Essentia::VectorBoolParameter do
+
+  before :example do
+    @parameter_value = [true, false, false, true]
+    @p = Essentia::VectorBoolParameter.new(@parameter_value)
+    @not_p = Essentia::VectorBoolParameter.new(@parameter_value.map { |x| !x })
+  end
+
+  it 'has all the methods in place (VectorBool)' do
+    check_methods(@p)
+  end
+
+  it 'actually does work' do
+    expect(@p.type).to eq(Essentia::ParamType::VECTOR_BOOL)
+    a = @p.to_vector_boolean
+    a.each_index { |idx| expect(a[idx]).to(be(@parameter_value[idx]), a[idx].to_s) }
+    expect(@p == @p).to be true
+    expect(@p == @not_p).to be false
+    expect(@p != @not_p).to be true
+    expect(@p.is_configured?).to be true
+  end
+
+end

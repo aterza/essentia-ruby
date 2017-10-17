@@ -79,6 +79,9 @@ template<> Rice::Object to_ruby<std::vector<essentia::Real> const &>(std::vector
 template<> Rice::detail::from_ruby_<std::vector<std::string> >::Retval_T *from_ruby<std::vector<std::string> *>(Rice::Object);
 template<> Rice::Object to_ruby<std::vector<std::string> const &>(std::vector<std::string> const &);
 
+template<> Rice::detail::from_ruby_<std::vector<bool> >::Retval_T *from_ruby<std::vector<bool> *>(Rice::Object);
+template<> Rice::Object to_ruby<std::vector<bool> const &>(std::vector<bool> const &);
+
 #if 0
 template<> Rice::Object to_ruby<essentia::Real>(const essentia::Real&);
 #endif
