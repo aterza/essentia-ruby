@@ -322,3 +322,27 @@ describe Essentia::VectorBoolParameter do
   end
 
 end
+
+describe Essentia::VectorIntParameter do
+
+  before :example do
+    @parameter_value = [-((2**24)-1), 0, (2**24)-1]
+    @p = Essentia::VectorIntParameter.new(@parameter_value)
+    @not_p = Essentia::VectorIntParameter.new(@parameter_value.map { |x| x / 2 })
+  end
+
+  it 'has all the methods in place (VectorInt)' do
+    check_methods(@p)
+  end
+
+  it 'actually does work' do
+    expect(@p.type).to eq(Essentia::ParamType::VECTOR_INT)
+    a = @p.to_vector_int
+    a.each_index { |idx| expect(a[idx]).to(be(@parameter_value[idx]), a[idx].to_s) }
+    expect(@p == @p).to be true
+    expect(@p == @not_p).to be false
+    expect(@p != @not_p).to be true
+    expect(@p.is_configured?).to be true
+  end
+
+end

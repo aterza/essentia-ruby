@@ -116,6 +116,13 @@ from_ruby<std::vector<bool> *>(Rice::Object x)
    return &(Rice::detail::from_ruby_<std::vector<bool> >::convert(x));
 }
 
+template <>
+Rice::detail::from_ruby_<std::vector<int> >::Retval_T *
+from_ruby<std::vector<int> *>(Rice::Object x)
+{
+   return &(Rice::detail::from_ruby_<std::vector<int> >::convert(x));
+}
+
 #if 0
 template <>
 Rice::Object
