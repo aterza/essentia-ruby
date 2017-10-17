@@ -95,6 +95,29 @@ to_ruby<essentia::StereoSample>(essentia::StereoSample const & ss)
   return a;
 }
 
+template <>
+Rice::detail::from_ruby_<std::vector<essentia::Real> >::Retval_T *
+from_ruby<std::vector<essentia::Real> *>(Rice::Object x)
+{
+   return &(Rice::detail::from_ruby_<std::vector<essentia::Real> >::convert(x));
+}
+
+template <>
+Rice::detail::from_ruby_<std::vector<std::string> >::Retval_T *
+from_ruby<std::vector<std::string> *>(Rice::Object x)
+{
+   return &(Rice::detail::from_ruby_<std::vector<std::string> >::convert(x));
+}
+
+#if 0
+template <>
+Rice::Object
+to_ruby<std::vector<essentia::Real> const &>(std::vector<essentia::Real> const &aa)
+{
+  return Rice::detail::to_ruby_<std::vector<essentia::Real> const &>::convert(aa);
+}
+#endif
+
 #if 0
 template <>
 Rice::Object

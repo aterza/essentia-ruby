@@ -250,3 +250,51 @@ describe Essentia::StereoSampleParameter do
   end
 
 end
+
+describe Essentia::VectorRealParameter do
+
+  before :example do
+    @parameter_value = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+    @p = Essentia::VectorRealParameter.new(@parameter_value)
+    @not_p = Essentia::VectorRealParameter.new(@parameter_value.map { |x| x/2.0 })
+  end
+
+  it 'has all the methods in place (VectorReal)' do
+    check_methods(@p)
+  end
+
+  it 'actually does work' do
+    expect(@p.type).to eq(Essentia::ParamType::VECTOR_REAL)
+    a = @p.to_vector_real
+    a.each_index { |idx| expect(a[idx]).to be_within(1e-12).of(@parameter_value[idx]) }
+    expect(@p == @p).to be true
+    expect(@p == @not_p).to be false
+    expect(@p != @not_p).to be true
+    expect(@p.is_configured?).to be true
+  end
+
+end
+
+describe Essentia::VectorStringParameter do
+
+  before :example do
+    @parameter_value = %w(one two three four five)
+    @p = Essentia::VectorStringParameter.new(@parameter_value)
+    @not_p = Essentia::VectorStringParameter.new(@parameter_value.map { |x| x + ' plus one' })
+  end
+
+  it 'has all the methods in place (VectorString)' do
+    check_methods(@p)
+  end
+
+  it 'actually does work' do
+    expect(@p.type).to eq(Essentia::ParamType::VECTOR_STRING)
+    a = @p.to_vector_string
+    a.each_index { |idx| expect(a[idx]).to(eq(@parameter_value[idx]), a[idx]) }
+    expect(@p == @p).to be true
+    expect(@p == @not_p).to be false
+    expect(@p != @not_p).to be true
+    expect(@p.is_configured?).to be true
+  end
+
+end

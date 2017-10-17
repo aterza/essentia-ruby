@@ -31,13 +31,13 @@ namespace Rice
       convert(Rice::Object x)
       {
         Rice::Array a(x);
-        Retval_T result;
-        result.reserve(a.size());
+        Retval_T *result = new Retval_T;
+        result->reserve(a.size());
         for (Rice::Array::iterator cur = a.begin(); cur != a.end(); ++cur)
         {
-          result.push_back(from_ruby<T>(*cur));
+          result->push_back(from_ruby<T>(*cur));
         }
-        return result;
+        return *result;
       }
     };
 
@@ -69,9 +69,15 @@ template<> bool *from_ruby<bool *>(Rice::Object);
 template<> int *from_ruby<int *>(Rice::Object);
 template<> double *from_ruby<double *>(Rice::Object);
 template<> uint *from_ruby<uint *>(Rice::Object);
+
 template<> essentia::StereoSample *from_ruby<essentia::StereoSample *>(Rice::Object);
 template<> Rice::Object to_ruby<essentia::StereoSample>(essentia::StereoSample const &);
 
+template<> Rice::detail::from_ruby_<std::vector<essentia::Real> >::Retval_T *from_ruby<std::vector<essentia::Real> *>(Rice::Object);
+template<> Rice::Object to_ruby<std::vector<essentia::Real> const &>(std::vector<essentia::Real> const &);
+
+template<> Rice::detail::from_ruby_<std::vector<std::string> >::Retval_T *from_ruby<std::vector<std::string> *>(Rice::Object);
+template<> Rice::Object to_ruby<std::vector<std::string> const &>(std::vector<std::string> const &);
 
 #if 0
 template<> Rice::Object to_ruby<essentia::Real>(const essentia::Real&);
