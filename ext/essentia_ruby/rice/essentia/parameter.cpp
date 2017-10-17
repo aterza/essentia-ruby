@@ -111,6 +111,7 @@ namespace Rice {
     static Rice::Data_Type<Rice::Essentia::VectorStringParameter> vector_string_parameter_type;
     static Rice::Data_Type<Rice::Essentia::VectorBoolParameter> vector_bool_parameter_type;
     static Rice::Data_Type<Rice::Essentia::VectorIntParameter> vector_int_parameter_type;
+    static Rice::Data_Type<Rice::Essentia::VectorStereoSampleParameter> vector_stereo_sample_parameter_type;
 
     static void
     install_specialized_parameters()
@@ -180,6 +181,12 @@ namespace Rice {
         vector_int_parameter_type =
           define_class_under<Rice::Essentia::VectorIntParameter, Rice::Essentia::ParameterBase>(essentia_module(), "VectorIntParameter")
           .define_constructor(Constructor<Rice::Essentia::VectorIntParameter, const std::vector<int>& >())
+          .add_handler<essentia::EssentiaException>(handle_essentia_exception)
+          ;
+
+        vector_stereo_sample_parameter_type =
+          define_class_under<Rice::Essentia::VectorStereoSampleParameter, Rice::Essentia::ParameterBase>(essentia_module(), "VectorStereoSampleParameter")
+          .define_constructor(Constructor<Rice::Essentia::VectorStereoSampleParameter, const std::vector<essentia::StereoSample>& >())
           .add_handler<essentia::EssentiaException>(handle_essentia_exception)
           ;
       }

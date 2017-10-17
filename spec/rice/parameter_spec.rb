@@ -346,3 +346,30 @@ describe Essentia::VectorIntParameter do
   end
 
 end
+
+describe Essentia::VectorStereoSampleParameter do
+
+  before :example do
+    @parameter_value = [[-((2**24)-1), 0], [0, (2**24)-1]]
+    @p = Essentia::VectorStereoSampleParameter.new(@parameter_value)
+    @not_p = Essentia::VectorStereoSampleParameter.new(@parameter_value.map { |x| x.map { |xx| xx / 2 } })
+  end
+
+  it 'has all the methods in place (VectorStereoSample)' do
+    check_methods(@p)
+  end
+
+  it 'actually does work' do
+    expect(@p.type).to eq(Essentia::ParamType::VECTOR_STEREOSAMPLE)
+    a = @p.to_vector_stereo_sample
+    a.each_index do
+      |idx|
+      a[idx].each_index { |jdx| expect(a[idx][jdx]).to(be_within(1e-8).of(@parameter_value[idx][jdx]), a[idx][jdx].to_s) }
+    end
+    expect(@p == @p).to be true
+    expect(@p == @not_p).to be false
+    expect(@p != @not_p).to be true
+    expect(@p.is_configured?).to be true
+  end
+
+end

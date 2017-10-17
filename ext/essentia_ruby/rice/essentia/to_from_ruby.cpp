@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "essentia/types.h"
 #include "to_from_ruby.hpp"
 
@@ -84,6 +86,13 @@ from_ruby<essentia::StereoSample *>(Rice::Object o)
 }
 
 template <>
+essentia::StereoSample 
+from_ruby<essentia::StereoSample>(Rice::Object o)
+{
+  return *(from_ruby<essentia::StereoSample *>(o));
+}
+
+template <>
 Rice::Object
 to_ruby<essentia::StereoSample>(essentia::StereoSample const & ss)
 {
@@ -122,6 +131,22 @@ from_ruby<std::vector<int> *>(Rice::Object x)
 {
    return &(Rice::detail::from_ruby_<std::vector<int> >::convert(x));
 }
+
+template <>
+Rice::detail::from_ruby_<std::vector<essentia::StereoSample> >::Retval_T *
+from_ruby<std::vector<essentia::StereoSample> *>(Rice::Object x)
+{
+   return &(Rice::detail::from_ruby_<std::vector<essentia::StereoSample> >::convert(x));
+}
+
+#if 0
+template <>
+Rice::Object
+to_ruby<std::vector<essentia::StereoSample> const &>(std::vector<essentia::StereoSample> const &ssv)
+{
+  return Rice::detail::to_ruby_<std::vector<essentia::StereoSample> const &>::convert(ssv);
+}
+#endif
 
 #if 0
 template <>

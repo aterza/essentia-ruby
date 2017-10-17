@@ -70,6 +70,7 @@ template<> int *from_ruby<int *>(Rice::Object);
 template<> double *from_ruby<double *>(Rice::Object);
 template<> uint *from_ruby<uint *>(Rice::Object);
 
+template<> essentia::StereoSample from_ruby<essentia::StereoSample>(Rice::Object);
 template<> essentia::StereoSample *from_ruby<essentia::StereoSample *>(Rice::Object);
 template<> Rice::Object to_ruby<essentia::StereoSample>(essentia::StereoSample const &);
 
@@ -84,6 +85,9 @@ template<> Rice::Object to_ruby<std::vector<bool> const &>(std::vector<bool> con
 
 template<> Rice::detail::from_ruby_<std::vector<int> >::Retval_T *from_ruby<std::vector<int> *>(Rice::Object);
 template<> Rice::Object to_ruby<std::vector<int> const &>(std::vector<int> const &);
+
+template<> Rice::detail::from_ruby_<std::vector<essentia::StereoSample> >::Retval_T *from_ruby<std::vector<essentia::StereoSample> *>(Rice::Object);
+template<> Rice::Object to_ruby<std::vector<essentia::StereoSample> const &>(std::vector<essentia::StereoSample> const &);
 
 #if 0
 template<> Rice::Object to_ruby<essentia::Real>(const essentia::Real&);
