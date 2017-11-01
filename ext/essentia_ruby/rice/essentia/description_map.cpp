@@ -1,8 +1,7 @@
 #include "rice/Data_Type.hpp"
 #include "rice/Data_Object.hpp"
 #include "rice/Constructor.hpp"
-#include "rice/Array.hpp"
-#include "rice/to_from_ruby.hpp"
+#include "rice/Hash.hpp"
 #include "rice/ruby_try_catch.hpp"
 
 #include <essentia/types.h>
@@ -43,6 +42,23 @@ namespace Rice {
        return result;
     }
 
+    static Rice::Object
+    wrap_DescriptionMap_size(Rice::Object o)
+    {
+       essentia::DescriptionMap *dm = from_ruby<essentia::DescriptionMap *>(o);
+       Rice::Object result = to_ruby(dm->size());
+       return result;
+    }
+
+    static Rice::Object
+    wrap_DescriptionMap_count(Rice::Object o, Rice::Object k)
+    {
+       essentia::DescriptionMap *dm = from_ruby<essentia::DescriptionMap *>(o);
+       const std::string key = from_ruby<std::string>(k);
+       Rice::Object result = to_ruby(dm->count(key));
+       return result;
+    }
+
     void
     install_description_maps()
     {
@@ -53,6 +69,8 @@ namespace Rice {
            .define_constructor(Constructor<essentia::DescriptionMap>())
            .add_handler<essentia::EssentiaException>(handle_essentia_exception)
            .define_method("keys", &wrap_DescriptionMap_keys)
+           .define_method("size", &wrap_DescriptionMap_size)
+           .define_method("count", &wrap_DescriptionMap_count)
            .define_method("[]", &wrap_DescriptionMap_operator_sqb)
            .define_method("insert", &wrap_DescriptionMap_insert);
        }

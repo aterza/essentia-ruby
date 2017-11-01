@@ -13,7 +13,7 @@
 // Not an official example; there may be a better way. Tested in rice 1.4.0.
 //
 #include <rice/Object.hpp>
-#include <rice/Array.hpp>
+#include <rice/Hash.hpp>
 #include <rice/to_from_ruby.hpp>
 
 namespace Rice
@@ -48,6 +48,35 @@ namespace Rice
       convert(std::vector<T> const & x)
       {
         return Rice::Array(x.begin(), x.end());
+      }
+    };
+
+    template<typename T>
+    struct from_ruby_<std::map<const std::string, T> > 
+    {
+      typedef std::map<const std::string, T> Retval_T;
+
+      static std::map<const std::string, T> &
+      convert(Rice::Object x)
+      {
+        Rice::Hash a(x);
+        Retval_T *result = new Retval_T;
+        result->reserve(a.size());
+        for (Rice::Hash::iterator cur = a.begin(); cur != a.end(); ++cur)
+        {
+          (*result)[cur->first] = from_ruby<T>(cur->second);
+        }
+        return *result;
+      }
+    };
+
+    template<typename T>
+    struct to_ruby_<std::map<const std::string, T> > 
+    {
+      static Rice::Object
+      convert(std::map<const std::string, T> const & x)
+      {
+        return Rice::Hash(x.begin(), x.end());
       }
     };
 
@@ -89,18 +118,4 @@ template<> Rice::Object to_ruby<std::vector<int> const &>(std::vector<int> const
 template<> Rice::detail::from_ruby_<std::vector<essentia::StereoSample> >::Retval_T *from_ruby<std::vector<essentia::StereoSample> *>(Rice::Object);
 template<> Rice::Object to_ruby<std::vector<essentia::StereoSample> const &>(std::vector<essentia::StereoSample> const &);
 
-#if 0
-template<> Rice::Object to_ruby<essentia::Real>(const essentia::Real&);
-#endif
-
-#if 0
-template<> std::type_info& from_ruby<std::type_info &>(Rice::Object);
-template<> Rice::Object to_ruby<std::type_info>(const std::type_info &);
-
-template<> Rice::detail::from_ruby_<std::vector<std::string> >::Retval_T from_ruby<std::vector<std::string> >(Rice::Object);
-template<> Rice::Object to_ruby<std::vector<std::string> const &>(std::vector<std::string> const &);
-
-template<> Rice::detail::from_ruby_<std::vector<essentia::Real> *>::Retval_T from_ruby<std::vector<essentia::Real> *>(Rice::Object);
-template<> Rice::Object to_ruby<std::vector<essentia::Real> const &>(std::vector<essentia::Real> const &);
-#endif
 #endif /* !defined(_RICE_ESSENTIA_TO_FROM_RUBY_HPP_) */

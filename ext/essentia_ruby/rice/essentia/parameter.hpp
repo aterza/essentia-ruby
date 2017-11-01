@@ -17,11 +17,15 @@ namespace Rice
       public:
 
         ParameterBase(essentia::Parameter::ParamType pt) : essentia::Parameter(pt) {}
+        ParameterBase(const essentia::Parameter &p) : essentia::Parameter(p) {}
 
         ParameterBase & operator=(const ParameterBase& p)
         {
           return (ParameterBase&) essentia::Parameter::operator=(p);
         }
+
+
+        Rice::Object value() const; // default value() method, to be overridden
 
         // sequence of overloaded ParameterBase constructors
         ParameterBase(const std::string &s) : essentia::Parameter(s) {}
@@ -43,6 +47,8 @@ namespace Rice
       public:
 
         StringParameter(const std::string &s) : ParameterBase(s) {}
+
+        Rice::Object value() const { return to_ruby(toString()); }
     };
 
     class RealParameter : public ParameterBase
@@ -50,6 +56,8 @@ namespace Rice
       public:
 
         RealParameter(const essentia::Real &r) : ParameterBase(r) {}
+
+        Rice::Object value() const { return to_ruby(toReal()); }
     };
 
     class BoolParameter : public ParameterBase
@@ -57,6 +65,8 @@ namespace Rice
       public:
 
         BoolParameter(const bool &b) : ParameterBase(b) {}
+
+        Rice::Object value() const { return to_ruby(toBool()); }
     };
 
     class IntParameter : public ParameterBase
@@ -64,6 +74,7 @@ namespace Rice
       public:
 
         IntParameter(const int &i) : ParameterBase(i) {}
+        // no need to override
     };
 
     class DoubleParameter : public ParameterBase
@@ -71,6 +82,8 @@ namespace Rice
       public:
 
         DoubleParameter(const double &d) : ParameterBase(d) {}
+
+        Rice::Object value() const { return to_ruby(toDouble()); }
     };
 
     class UintParameter : public ParameterBase
@@ -78,6 +91,7 @@ namespace Rice
       public:
 
         UintParameter(const uint &u) : ParameterBase(u) {}
+        // no need to override
     };
 
     class StereoSampleParameter : public ParameterBase
@@ -85,6 +99,8 @@ namespace Rice
       public:
 
         StereoSampleParameter(const essentia::StereoSample& ss) : ParameterBase(ss) {}
+
+        Rice::Object value() const { return to_ruby(toStereoSample()); }
     };
 
     class VectorRealParameter : public ParameterBase
@@ -92,6 +108,8 @@ namespace Rice
       public:
 
         VectorRealParameter(const std::vector<essentia::Real>& rv) : ParameterBase(rv) {}
+
+        Rice::Object value() const { return to_ruby(toVectorReal()); }
     };
 
     class VectorStringParameter : public ParameterBase
@@ -99,6 +117,8 @@ namespace Rice
       public:
 
         VectorStringParameter(const std::vector<std::string>& sv) : ParameterBase(sv) {}
+
+        Rice::Object value() const { return to_ruby(toVectorString()); }
     };
 
     class VectorBoolParameter : public ParameterBase
@@ -106,6 +126,8 @@ namespace Rice
       public:
 
         VectorBoolParameter(const std::vector<bool>& bv) : ParameterBase(bv) {}
+
+        Rice::Object value() const { return to_ruby(toVectorBool()); }
     };
 
     class VectorIntParameter : public ParameterBase
@@ -113,6 +135,8 @@ namespace Rice
       public:
 
         VectorIntParameter(const std::vector<int>& iv) : ParameterBase(iv) {}
+
+        Rice::Object value() const { return to_ruby(toVectorInt()); }
     };
 
     class VectorStereoSampleParameter : public ParameterBase
@@ -120,10 +144,18 @@ namespace Rice
       public:
 
         VectorStereoSampleParameter(const std::vector<essentia::StereoSample>& ssv) : ParameterBase(ssv) {}
+
+        Rice::Object value() const { return to_ruby(toVectorStereoSample()); }
     };
 
     void install_parameters();
   }
 }
+
+/*
+ * to/from ruby prototypes
+ */
+
+template <> Rice::Object to_ruby<essentia::Parameter>(essentia::Parameter const &);
 
 #endif /* !defined(_RICE_ESSENTIA_PARAMETER_HPP_) */

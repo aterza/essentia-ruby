@@ -1,14 +1,16 @@
 require 'mkmf-rice'
 
 output_name = 'essentia_ruby_wrap'
+#       parameter_map.o
 $objs = %w(
+        parameter_map.o
+        description_map.o
         parameter.o
         io.o
         to_from_ruby.o
         types.o
         io_base.o
         algorithm.o
-        description_map.o
         exception.o
         setup.o
         modules.o

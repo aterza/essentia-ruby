@@ -37,12 +37,9 @@ namespace Rice {
       RUBY_CATCH
     }
 
-    void install_description_maps();
-
     void install_essentia_types()
     {
        install_type_info();
-       install_description_maps();
     }
   }
 }

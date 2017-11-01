@@ -12,7 +12,7 @@ describe Essentia::DescriptionMap do
     expect(@dm).not_to be nil
   end
 
-  methods = [:keys, :[], :insert]
+  methods = [:keys, :[], :insert, :size, :count]
 
   methods.each do
     |m|
@@ -35,8 +35,18 @@ describe Essentia::DescriptionMap do
 
   it 'has a method insert() that actually works' do
     expect((dm = Essentia::DescriptionMap.new)).not_to be nil
+    expect(dm.size).to eq(0)
     dm.insert(@tk, @tv)
     expect(dm.keys().include?(@tk)).to be true
+    expect(dm.size).to eq(1)
+  end
+
+  it 'has a method count() that actually works' do
+    expect((dm = Essentia::DescriptionMap.new)).not_to be nil
+    expect(dm.count(@tk)).to eq(0)
+    dm.insert(@tk, @tv)
+    expect(dm.keys().include?(@tk)).to be true
+    expect(dm.count(@tk)).to eq(1)
   end
 
 end
