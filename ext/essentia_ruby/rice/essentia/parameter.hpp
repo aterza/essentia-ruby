@@ -27,6 +27,8 @@ namespace Rice
 
         Rice::Object value() const; // default value() method, to be overridden
 
+        static Rice::Object to_ruby_promoter(essentia::Parameter const &p);
+
         // sequence of overloaded ParameterBase constructors
         ParameterBase(const std::string &s) : essentia::Parameter(s) {}
         ParameterBase(const essentia::Real &r) : essentia::Parameter(r) {}
@@ -151,11 +153,4 @@ namespace Rice
     void install_parameters();
   }
 }
-
-/*
- * to/from ruby prototypes
- */
-
-template <> Rice::Object to_ruby<essentia::Parameter>(essentia::Parameter const &);
-
 #endif /* !defined(_RICE_ESSENTIA_PARAMETER_HPP_) */

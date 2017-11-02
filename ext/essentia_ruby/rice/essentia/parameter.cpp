@@ -15,6 +15,45 @@
 namespace Rice {
   namespace Essentia {
 
+    /*
+     * ugly hack to promote an essentia::Parameter to an actual
+     * ruby *Parameter. Can't figure out a better way right now.
+     */
+    Rice::Object
+    ParameterBase::to_ruby_promoter(essentia::Parameter const& p)
+    {
+      switch(p.type())
+      {
+        case essentia::Parameter::ParamType::INT:
+          return to_ruby<Rice::Essentia::IntParameter>((Rice::Essentia::IntParameter const &) p);
+        case essentia::Parameter::ParamType::REAL:
+          return to_ruby<Rice::Essentia::RealParameter>((Rice::Essentia::RealParameter const &) p);
+        case essentia::Parameter::ParamType::STRING:
+          return to_ruby<Rice::Essentia::StringParameter>((Rice::Essentia::StringParameter const &) p);
+        case essentia::Parameter::ParamType::BOOL:
+          return to_ruby<Rice::Essentia::BoolParameter>((Rice::Essentia::BoolParameter const &) p);
+        case essentia::Parameter::ParamType::STEREOSAMPLE:
+          return to_ruby<Rice::Essentia::StereoSampleParameter>((Rice::Essentia::StereoSampleParameter const &) p);
+        case essentia::Parameter::ParamType::VECTOR_REAL:
+          return to_ruby<Rice::Essentia::VectorRealParameter>((Rice::Essentia::VectorRealParameter const &) p);
+        case essentia::Parameter::ParamType::VECTOR_STRING:
+          return to_ruby<Rice::Essentia::VectorStringParameter>((Rice::Essentia::VectorStringParameter const &) p);
+        case essentia::Parameter::ParamType::VECTOR_INT:
+          return to_ruby<Rice::Essentia::VectorIntParameter>((Rice::Essentia::VectorIntParameter const &) p);
+        case essentia::Parameter::ParamType::VECTOR_STEREOSAMPLE:
+          return to_ruby<Rice::Essentia::VectorStereoSampleParameter>((Rice::Essentia::VectorStereoSampleParameter const &) p);
+        default:
+          throw essentia::EssentiaException("ParameterBase: unhandled parameter type");
+      }
+    }
+
+    Rice::Object
+    ParameterBase::value() const
+    {
+      Rice::Object null_value;
+      return null_value;
+    }
+
     static Rice::Enum<essentia::Parameter::ParamType> parameter_type_type;
 
     static void

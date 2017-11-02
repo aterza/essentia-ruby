@@ -1,3 +1,6 @@
+#include <iostream>
+#include <typeinfo>
+
 #include "rice/Data_Type.hpp"
 #include "rice/Data_Object.hpp"
 #include "rice/Constructor.hpp"
@@ -19,8 +22,7 @@ namespace Rice
     {
       essentia::ParameterMap *pm = from_ruby<essentia::ParameterMap *>(o);
       std::string key = from_ruby<std::string>(k);
-      Rice::Essentia::ParameterBase *pb = (Rice::Essentia::ParameterBase *) &((*pm)[key]);
-      return pb->value();
+      return Rice::Essentia::ParameterBase::to_ruby_promoter((*pm)[key]);
     }
 
     static int

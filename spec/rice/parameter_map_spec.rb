@@ -7,8 +7,10 @@ describe Essentia::ParameterMap do
     @tv =
     {
       @tk => Essentia::StringParameter.new('test value'),
-      'second' => Essentia::DoubleParameter.new(23.23),
-      'third' => Essentia::VectorStereoSampleParameter.new([[-1.0, 1.0], [1.0, -1.0]]),
+      'real' => Essentia::RealParameter.new(23.23),
+      'stereo sample' => Essentia::VectorStereoSampleParameter.new([[-1.0, 1.0], [1.0, -1.0]]),
+      'int' => Essentia::IntParameter.new(42),
+      'boolean' => Essentia::BoolParameter.new(true),
     }
     @pm = Essentia::ParameterMap.new
     @tv.each { |k, v| @pm.add(k, v) }
@@ -42,6 +44,9 @@ describe Essentia::ParameterMap do
       expect(p.class).to eq(@tv[k].class)
       expect(p).to eq (v)
     end
+  end
+
+  it 'can be created with a Hash' do
   end
 
 end
