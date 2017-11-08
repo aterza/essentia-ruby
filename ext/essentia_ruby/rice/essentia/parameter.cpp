@@ -11,11 +11,23 @@
 #include "exception.hpp"
 #include "to_from_ruby.hpp"
 #include "parameter.hpp"
+#include "param_type.hpp"
 
 namespace Rice {
   namespace Essentia {
 
+    template <typename T>
+    Rice::Object
+    ParameterBase::create_ruby_parameter(essentia::Parameter const &p)
+    {
+      return to_ruby<T>((T const &) p);
+    }
+
     /*
+     * TODO: this is the to_ruby<essentia::Parameter> function
+     *       the from_ruby<essentia::Parameter *> function is the one
+     *       in the ParameterMap files. FIXME
+     *
      * ugly hack to promote an essentia::Parameter to an actual
      * ruby *Parameter. Can't figure out a better way right now.
      */
@@ -25,23 +37,23 @@ namespace Rice {
       switch(p.type())
       {
         case essentia::Parameter::ParamType::INT:
-          return to_ruby<Rice::Essentia::IntParameter>((Rice::Essentia::IntParameter const &) p);
+          return create_ruby_parameter<Rice::Essentia::IntParameter>(p);
         case essentia::Parameter::ParamType::REAL:
-          return to_ruby<Rice::Essentia::RealParameter>((Rice::Essentia::RealParameter const &) p);
+          return create_ruby_parameter<Rice::Essentia::RealParameter>(p);
         case essentia::Parameter::ParamType::STRING:
-          return to_ruby<Rice::Essentia::StringParameter>((Rice::Essentia::StringParameter const &) p);
+          return create_ruby_parameter<Rice::Essentia::StringParameter>(p);
         case essentia::Parameter::ParamType::BOOL:
-          return to_ruby<Rice::Essentia::BoolParameter>((Rice::Essentia::BoolParameter const &) p);
+          return create_ruby_parameter<Rice::Essentia::BoolParameter>(p);
         case essentia::Parameter::ParamType::STEREOSAMPLE:
-          return to_ruby<Rice::Essentia::StereoSampleParameter>((Rice::Essentia::StereoSampleParameter const &) p);
+          return create_ruby_parameter<Rice::Essentia::StereoSampleParameter>(p);
         case essentia::Parameter::ParamType::VECTOR_REAL:
-          return to_ruby<Rice::Essentia::VectorRealParameter>((Rice::Essentia::VectorRealParameter const &) p);
+          return create_ruby_parameter<Rice::Essentia::VectorRealParameter>(p);
         case essentia::Parameter::ParamType::VECTOR_STRING:
-          return to_ruby<Rice::Essentia::VectorStringParameter>((Rice::Essentia::VectorStringParameter const &) p);
+          return create_ruby_parameter<Rice::Essentia::VectorStringParameter>(p);
         case essentia::Parameter::ParamType::VECTOR_INT:
-          return to_ruby<Rice::Essentia::VectorIntParameter>((Rice::Essentia::VectorIntParameter const &) p);
+          return create_ruby_parameter<Rice::Essentia::VectorIntParameter>(p);
         case essentia::Parameter::ParamType::VECTOR_STEREOSAMPLE:
-          return to_ruby<Rice::Essentia::VectorStereoSampleParameter>((Rice::Essentia::VectorStereoSampleParameter const &) p);
+          return create_ruby_parameter<Rice::Essentia::VectorStereoSampleParameter>(p);
         default:
           throw essentia::EssentiaException("ParameterBase: unhandled parameter type");
       }
@@ -54,36 +66,6 @@ namespace Rice {
       return null_value;
     }
 
-    static Rice::Enum<essentia::Parameter::ParamType> parameter_type_type;
-
-    static void
-    install_parameter_type()
-    {
-      parameter_type_type =
-        define_enum<essentia::Parameter::ParamType>("ParamType", essentia_module())
-        .define_value("UNDEFINED", essentia::Parameter::ParamType::UNDEFINED)
-        .define_value("REAL", essentia::Parameter::ParamType::REAL)
-        .define_value("STRING", essentia::Parameter::ParamType::STRING)
-        .define_value("BOOL", essentia::Parameter::ParamType::BOOL)
-        .define_value("INT", essentia::Parameter::ParamType::INT)
-        .define_value("STEREOSAMPLE", essentia::Parameter::ParamType::STEREOSAMPLE)
-        .define_value("VECTOR_REAL", essentia::Parameter::ParamType::VECTOR_REAL)
-        .define_value("VECTOR_STRING", essentia::Parameter::ParamType::VECTOR_STRING)
-        .define_value("VECTOR_BOOL", essentia::Parameter::ParamType::VECTOR_BOOL)
-        .define_value("VECTOR_INT", essentia::Parameter::ParamType::VECTOR_INT)
-        .define_value("VECTOR_STEREOSAMPLE", essentia::Parameter::ParamType::VECTOR_STEREOSAMPLE)
-        .define_value("VECTOR_VECTOR_REAL", essentia::Parameter::ParamType::VECTOR_VECTOR_REAL)
-        .define_value("VECTOR_VECTOR_STRING", essentia::Parameter::ParamType::VECTOR_VECTOR_STRING)
-        .define_value("VECTOR_VECTOR_STEREOSAMPLE", essentia::Parameter::ParamType::VECTOR_VECTOR_STEREOSAMPLE)
-        .define_value("VECTOR_MATRIX_REAL", essentia::Parameter::ParamType::VECTOR_MATRIX_REAL)
-        .define_value("MAP_VECTOR_REAL", essentia::Parameter::ParamType::MAP_VECTOR_REAL)
-        .define_value("MAP_VECTOR_STRING", essentia::Parameter::ParamType::MAP_VECTOR_STRING)
-        .define_value("MAP_VECTOR_INT", essentia::Parameter::ParamType::MAP_VECTOR_INT)
-        .define_value("MAP_REAL", essentia::Parameter::ParamType::MAP_REAL)
-        .define_value("MATRIX_REAL", essentia::Parameter::ParamType::MATRIX_REAL)
-        ;
-    }
-
     static Rice::Data_Type<essentia::Parameter> parameter_type;
     static Rice::Data_Type<Rice::Essentia::ParameterBase> parameter_base_type;
 
@@ -94,6 +76,8 @@ namespace Rice {
     {
       RUBY_TRY
       {
+        void install_parameter_type();
+
         install_parameter_type();
 
         parameter_type =
@@ -233,4 +217,63 @@ namespace Rice {
     }
 
   }
+}
+
+//
+// to/from ruby
+//
+
+template <>
+essentia::Parameter *
+from_ruby<essentia::Parameter *>(Rice::Object o)
+{
+  essentia::Parameter *p = 0;
+
+  switch(o.rb_type())
+  {
+    case T_STRING:
+      p = Rice::Essentia::ParameterBase::to_essentia_Parameter<Rice::Essentia::StringParameter, std::string>(o);
+      break;
+    case T_TRUE:
+    case T_FALSE:
+      p = Rice::Essentia::ParameterBase::to_essentia_Parameter<Rice::Essentia::BoolParameter, bool>(o);
+    case T_FIXNUM:
+      p = Rice::Essentia::ParameterBase::to_essentia_Parameter<Rice::Essentia::IntParameter, int>(o);
+      break;
+    case T_FLOAT:
+      p = Rice::Essentia::ParameterBase::to_essentia_Parameter<Rice::Essentia::RealParameter, float>(o);
+      break;
+    case T_ARRAY:
+      if (Rice::Essentia::is_it_a_stereo_sample(o))
+      {
+        p = Rice::Essentia::ParameterBase::to_essentia_Parameter<Rice::Essentia::StereoSampleParameter, essentia::StereoSample>(o);
+      }
+      else if (Rice::Essentia::is_it_an_array_of(o, RUBY_T_STRING))
+      {
+        p = Rice::Essentia::ParameterBase::to_essentia_Parameter<Rice::Essentia::VectorStringParameter, std::vector<std::string> >(o);
+      }
+      else if (Rice::Essentia::is_it_an_array_of(o, RUBY_T_FIXNUM))
+      {
+        p = Rice::Essentia::ParameterBase::to_essentia_Parameter<Rice::Essentia::VectorIntParameter, std::vector<int> >(o);
+      }
+      else if (Rice::Essentia::is_it_an_array_of(o, RUBY_T_FIXNUM, RUBY_T_FLOAT))
+      {
+        p = Rice::Essentia::ParameterBase::to_essentia_Parameter<Rice::Essentia::VectorRealParameter, std::vector<essentia::Real> >(o);
+      }
+      else if (Rice::Essentia::is_it_an_array_of(o, RUBY_T_TRUE, RUBY_T_FALSE))
+      {
+        p = Rice::Essentia::ParameterBase::to_essentia_Parameter<Rice::Essentia::VectorBoolParameter, std::vector<bool> >(o);
+      }
+      else if (Rice::Essentia::is_it_an_array_of_stereo_samples(o))
+      {
+        p = Rice::Essentia::ParameterBase::to_essentia_Parameter<Rice::Essentia::VectorStereoSampleParameter, std::vector<essentia::StereoSample> >(o);
+      }
+      else
+        throw essentia::EssentiaException("Argument Error: unrecognized array parameter type");
+      break;
+    default:
+      throw essentia::EssentiaException("Argument Error: unrecognized parameter type");
+  }
+
+  return p;
 }

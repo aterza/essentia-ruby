@@ -3,6 +3,7 @@ require 'mkmf-rice'
 output_name = 'essentia_ruby_wrap'
 #       parameter_map.o
 $objs = %w(
+        param_type.o
         parameter_map.o
         description_map.o
         parameter.o

@@ -4,6 +4,9 @@
 #include <essentia/parameter.h>
 
 #include "to_from_ruby.hpp"
+#include "param_type.hpp"
+
+template <> essentia::Parameter *from_ruby<essentia::Parameter *>(Rice::Object);
 
 namespace Rice
 {
@@ -15,6 +18,15 @@ namespace Rice
     class ParameterBase : public essentia::Parameter
     {
       public:
+
+        template <typename To, typename From>
+        static essentia::Parameter *
+        to_essentia_Parameter(Rice::Object f)
+        {
+          return new To(from_ruby<From>(f));
+        }
+
+        template<typename T> static Rice::Object create_ruby_parameter(essentia::Parameter const &);
 
         ParameterBase(essentia::Parameter::ParamType pt) : essentia::Parameter(pt) {}
         ParameterBase(const essentia::Parameter &p) : essentia::Parameter(p) {}
@@ -153,4 +165,5 @@ namespace Rice
     void install_parameters();
   }
 }
+
 #endif /* !defined(_RICE_ESSENTIA_PARAMETER_HPP_) */
