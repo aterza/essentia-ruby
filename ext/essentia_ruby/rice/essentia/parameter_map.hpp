@@ -10,8 +10,6 @@ namespace Rice
 
     class ParameterMapProxy : public essentia::ParameterMap
     {
-      essentia::Parameter *prepare_to_add(Rice::Object);
-
       public:
 
       ParameterMapProxy(Rice::Hash = Rice::Hash());

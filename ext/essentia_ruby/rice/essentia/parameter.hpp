@@ -6,8 +6,6 @@
 #include "to_from_ruby.hpp"
 #include "param_type.hpp"
 
-template <> essentia::Parameter *from_ruby<essentia::Parameter *>(Rice::Object);
-
 namespace Rice
 {
   namespace Essentia
@@ -19,15 +17,16 @@ namespace Rice
     {
       public:
 
-        template <typename To, typename From>
-        static essentia::Parameter *
-        to_essentia_Parameter(Rice::Object f)
+        template <typename Toep, typename From>
+        static ParameterBase *
+        to_ParameterBase(Rice::Object f)
         {
-          return new To(from_ruby<From>(f));
+          return new Toep(from_ruby<From>(f));
         }
 
         template<typename T> static Rice::Object create_ruby_parameter(essentia::Parameter const &);
 
+        ParameterBase() : essentia::Parameter(essentia::Parameter::ParamType::UNDEFINED) {}
         ParameterBase(essentia::Parameter::ParamType pt) : essentia::Parameter(pt) {}
         ParameterBase(const essentia::Parameter &p) : essentia::Parameter(p) {}
 
@@ -38,8 +37,6 @@ namespace Rice
 
 
         Rice::Object value() const; // default value() method, to be overridden
-
-        static Rice::Object to_ruby_promoter(essentia::Parameter const &p);
 
         // sequence of overloaded ParameterBase constructors
         ParameterBase(const std::string &s) : essentia::Parameter(s) {}
@@ -165,5 +162,8 @@ namespace Rice
     void install_parameters();
   }
 }
+
+template <> Rice::Essentia::ParameterBase *from_ruby<Rice::Essentia::ParameterBase *>(Rice::Object);
+template <> Rice::Object to_ruby<essentia::Parameter>(essentia::Parameter const&);
 
 #endif /* !defined(_RICE_ESSENTIA_PARAMETER_HPP_) */

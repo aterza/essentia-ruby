@@ -27,14 +27,14 @@ namespace Rice
       essentia::ParameterMap::add(key, *p);
     }
 
-    static Rice::Data_Type<ParameterMapProxy> parameter_map_type;
+    static Rice::Data_Type<ParameterMapProxy> rb_cParameterMap;
 
     static Rice::Object
     wrap_ParameterMap_operator_sqb(Rice::Object o, Rice::Object k)
     {
       ParameterMapProxy *pm = from_ruby<ParameterMapProxy *>(o);
       std::string key = from_ruby<std::string>(k);
-      return Rice::Essentia::ParameterBase::to_ruby_promoter((*pm)[key]);
+      return to_ruby<essentia::Parameter>((*pm)[key]);
     }
 
     static int
@@ -49,8 +49,7 @@ namespace Rice
     {
        RUBY_TRY
        {
-
-         parameter_map_type =
+         rb_cParameterMap =
            define_class_under<ParameterMapProxy>(essentia_module(), "ParameterMap")
            .define_constructor(Constructor<ParameterMapProxy, Rice::Hash>(), (Arg("maybe hash") = Rice::Hash()))
            .add_handler<essentia::EssentiaException>(handle_essentia_exception)
