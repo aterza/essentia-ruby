@@ -11,11 +11,11 @@ commands:
 #
 # this loads the submodule repositories
 #
-$ git submodule update --init 'ext/essentia_ruby/essentia'        # the actual essentia library
-$ git submodule update --init 'ext/essentia_ruby/essentia-audio'  # the audio test samples
+$ git submodule update --init 'ext/essentia_ruby/essentia'        # the actual essentia library; this takes quite a long while
+$ git submodule update --init 'ext/essentia_ruby/essentia-audio'  # the audio test samples; this takes quite a long while
 $ cd ext/essentia_ruby/essentia
-$ ./wav configure --mode=release --build_static
-$ ./wav # this takes quite a while
+$ ./waf configure [--library-type=static] [--build-type=release]
+$ ./waf # this takes quite a while
 ```
 
 After this you can run the tests to verify that everything is in place:
