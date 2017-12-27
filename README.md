@@ -1,6 +1,6 @@
 # Essentia
 
-TODO: Write a gem description
+Essentia is an open-source library and tools for audio and music analysis, description and synthesis. Essentia-Ruby is a Ruby gem wrapping Essentia.
 
 ## Installation
 
