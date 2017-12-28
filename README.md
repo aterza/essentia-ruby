@@ -42,7 +42,7 @@ Or install it yourself as:
 
 ## Usage
 
-`essentia_ruby` has heplers that can be used as methods or functions to run
+`essentia_ruby` has helpers that can be used as methods or functions to run
 the desired analysis algorithm. You are welcome to add more helpers.
 
 Then you can do:
@@ -57,7 +57,7 @@ and boum, you have the whole library.
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/essentia_ruby/fork )
+1. Fork it ( https://github.com/[my-github-username]/essentia-ruby/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
